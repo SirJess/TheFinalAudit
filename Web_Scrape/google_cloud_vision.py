@@ -3,25 +3,10 @@ from google.cloud import vision
 from google.cloud import storage
 from google.oauth2 import service_account
 import json
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv('.env.local')
+# Path to your service account JSON credentials file
+SERVICE_ACCOUNT_FILE = 'astral-charter-450316-c2-5990a3d829f0.json'
 
-# Access service account information from environment variables
-SERVICE_ACCOUNT_FILE = {
-    "type": os.getenv("SERVICE_ACCOUNT_TYPE"),
-    "project_id": os.getenv("SERVICE_ACCOUNT_PROJECT_ID"),
-    "private_key_id": os.getenv("SERVICE_ACCOUNT_PRIVATE_KEY_ID"),
-    "private_key": os.getenv("SERVICE_ACCOUNT_PRIVATE_KEY"),
-    "client_email": os.getenv("SERVICE_ACCOUNT_CLIENT_EMAIL"),
-    "client_id": os.getenv("SERVICE_ACCOUNT_CLIENT_ID"),
-    "auth_uri": os.getenv("SERVICE_ACCOUNT_AUTH_URI"),
-    "token_uri": os.getenv("SERVICE_ACCOUNT_TOKEN_URI"),
-    "auth_provider_x509_cert_url": os.getenv("SERVICE_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL"),
-    "client_x509_cert_url": os.getenv("SERVICE_ACCOUNT_CLIENT_X509_CERT_URL"),
-    "universe_domain": os.getenv("SERVICE_ACCOUNT_UNIVERSE_DOMAIN")
-}
 # Load the credentials from the JSON file
 credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE)
 
