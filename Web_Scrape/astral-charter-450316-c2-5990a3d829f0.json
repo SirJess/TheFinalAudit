@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "astral-charter-450316-c2",
+  "private_key_id": "5990a3d829f0aac39c27e67fd5a286abbc9d12c7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC3WsQCSCqiskcv\nC7YtNhQa10Jydzer7FEnjKAwDtDx3tU/WGFJG9nKP6tMYhClgt6/luKc9kCWEZUD\nDC9knuZO7CQIMms3gziwgcphqy6Nhk6GygmGBk8ejxxmk3JBbs7mwVTKvdkFA79n\nIUFB3nFGUxmdfI1eMR55TS6wKZ3HRFzuCnUNL8+FZrDwt0HenEYa/GRQpyFkyut2\ntftVFmscEg6BVH/egGFMvSGtVRG2K04oRFXPbl8KrqzI8mCml9FdGOn9L/hVasu6\nCxVW3sV7EYzMRSb6GmdihafoMJrbe3djAcDMOPY4YJec68aUURl/xgXxTt8q4A+i\nb8Rrje0vAgMBAAECggEAJLekcOCKyTHyV1V9Eei2dfmNcOa221LjnYvnuDf/V7BL\n+/dy4/UT1BCT+SPaOYrPmIZasxwNKwAyWv3hr8CyVjOrs4iFOASrIY2cPZrOI8E1\nkIB9D73Lsk7uXQxB4SCThlpI5KDICN0LQ1fBfbNR88dIZeU/WhF0DM6L/vMWiYSs\nFCn28k8tCoWg4g1JjMCy5Ap4d9s7RNK7UPGtqBFD9DiTPurEpCnNT1CWvuCGMuan\nVwXf992kfTas9yu/5R8Ng1nFnofYjhAZM9pxW3OBilN9iOQqMGss74mGm/1oAVJK\nL1wp0kb7PKoFH+yrplWceOZgfl+O8Oj3gGTrX4DPIQKBgQDrhinKw2zGHaOjvdCw\nkBFau2E9smoLcQ2KQwgonpK1qSlV1qAJdC5iVNA0pqO4bQ7NqShFhbAc4EC2Mviv\n0QWsCCD1FLXYjp0h92mQuF9KWTx07Hzun9cRXHl7zkf5y0DIBRFs3IM1g0oCWRet\nULJnR9rzn8MtZcIhSpR0hsLvJQKBgQDHS4PBON330Qsog4lB6mSJv/C7/ZdMuX59\nJCHzmv4hLCFMxKXhaI5by+HiWN4JPj/NtWQtq2YpTE8F17yJkhmLu1nv6JrBpCXE\nhhcn92376mofq1DwFw6QkUYuVZj3OlFmYaNfR8jW35ZaZWwZhIMZPY75kepQJs5W\nZuhEzlF0wwKBgQC/1bNMmAiNBa83u2+zoGTCRkVZ/2wojZi9uQN4MlDE7lfgtsP7\nb0oohXRgripEGXApS1Kl7dIYcv/CZ5nveozoJmbRuGC1VtPdyquNWN8kq7J2efj4\nU/DVD0FT+hzd9RN618XtqV6lw54Qc4i5fjURspFARiyvWWbZvulUUD+OkQKBgATS\nrQOWDrkak/yNAltYAsranEbQYkL3EjqRD0lH7PJ8kOm8sI796sQJ8RN7NxReL0kZ\nJK1+QmCpehgYGnXx1TBufkSyCly5TjitTg4njL/V8m+Fw9WrmSyid2JTq/n/rUye\n/EcoA5I/ovHZFn6fmFSaCsW7ZEJATioFH4XawFnlAoGBAI5TDQYtF9IA7WGmhLfM\nt/ZI3HAQ6GYHFUtG0sw0KU8C4q4u8euR4Od76pYhSqHM4EyNH1kUeaWz5RzEAnuI\nXZaBBCobm4ebWNdHC3r3UxLv/nt0SyzJ/yy/twUxG+iJhp4wo1fzf0yrnPJAZRNt\nOCYvvbnWNtjTJtz1Sfszu67C\n-----END PRIVATE KEY-----\n",
+  "client_email": "pdf-scraper@astral-charter-450316-c2.iam.gserviceaccount.com",
+  "client_id": "104428959447378150867",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pdf-scraper%40astral-charter-450316-c2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
