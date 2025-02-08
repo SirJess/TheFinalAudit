@@ -1,0 +1,127 @@
+import escapeRoom1 from "../../assets/escapeRoom1.jpg";
+import learnBalanceSheet from "../../assets/learnBalanceSheet.png";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import * as Dialog from "@radix-ui/react-dialog";
+
+export default function EscapeRoom() {
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const hotspots = [
+    {
+      id: "poster",
+      x: "748px",
+      y: "368px",
+      width: "66px",
+      height: "92px",
+      image: learnBalanceSheet,
+      borderRadius: "0px",
+      boxShadow: "0px 0px 10px 4px rgba(255, 255, 0, 0.6)", // Change this to the poster image path
+    },
+    {
+      id: "assets",
+      x: "825px",
+      y: "785px",
+      width: "78px",
+      height: "33px",
+      image: learnBalanceSheet, // Change this to the poster image path
+      borderRadius: "12px", // Makes edges softer
+      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+    },
+
+    {
+      id: "liability",
+      x: "298px",
+      y: "825px",
+      width: "60px",
+      height: "33px",
+      image: learnBalanceSheet, // Change this to the poster image path
+      borderRadius: "12px", // Makes edges softer
+      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+    },
+    {
+      id: "enter_balance_sheet",
+      x: "445px",
+      y: "500px",
+      width: "111px",
+      height: "80px",
+      image: learnBalanceSheet, // Change this to the poster image path
+      borderRadius: "0px", // Makes edges softer
+      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+    },
+    {
+      id: "profit",
+      x: "1454px",
+      y: "610px",
+      width: "70px",
+      height: "19px",
+      image: learnBalanceSheet, // Change this to the poster image path
+      borderRadius: "12px", // Makes edges softer
+      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+    },
+    {
+      id: "profit",
+      x: "1454px",
+      y: "610px",
+      width: "70px",
+      height: "19px",
+      image: learnBalanceSheet, // Change this to the poster image path
+      borderRadius: "12px", // Makes edges softer
+      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+    },
+    {
+      id: "share_folder_equity",
+      x: "1548px",
+      y: "834px",
+      width: "79px",
+      height: "30px",
+      image: learnBalanceSheet, // Change this to the poster image path
+      borderRadius: "0px", // Makes edges softer
+      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+    },
+  ];
+
+  return (
+    <div className="relative w-full h-screen bg-black">
+      <img
+        src={escapeRoom1} // Background image
+        alt="Escape Room"
+        className="w-full h-full object-cover"
+      />
+
+      {hotspots.map((spot) => (
+        <motion.div
+          key={spot.id}
+          className="absolute bg-transparent cursor-pointer"
+          style={{
+            left: spot.x,
+            top: spot.y,
+            width: spot.width,
+            height: spot.height,
+            boxShadow: spot.boxShadow,
+            borderRadius: spot.borderRadius,
+          }}
+          whileHover={{ scale: 1.1 }}
+          onClick={() => setSelectedItem(spot)}
+        />
+      ))}
+
+      {selectedItem && (
+        <Dialog.Root open={true} onOpenChange={() => setSelectedItem(null)}>
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-50" />
+          <Dialog.Content className="fixed inset-0 flex justify-center items-center p-4">
+            <div className="bg-white p-4 rounded-lg">
+              <img src={selectedItem.image} alt="Popup" className="w-full" />
+              <button
+                onClick={() => setSelectedItem(null)}
+                className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
+              >
+                Close
+              </button>
+            </div>
+          </Dialog.Content>
+        </Dialog.Root>
+      )}
+    </div>
+  );
+}
