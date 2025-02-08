@@ -17,8 +17,13 @@
 import openai
 import json
 
-openai.api_key = "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"
+from dotenv import load_dotenv
 
+# Load environment variables from .env.local file
+load_dotenv('.env.local')
+
+# Retrieve OpenAI API key from the environment variable
+openai.api_key = os.getenv("OPENAI_API_KEY")
 with open("output.txt", "r") as file:
     data = file.read()
 
