@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -13,7 +14,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
+const storage = getStorage(app);
 
+// Sign in with Google
 const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
@@ -35,6 +38,35 @@ const signInWithGoogle = async () => {
   }
 };
 
+// Log out
 const logout = () => signOut(auth);
 
-export { auth, signInWithGoogle, logout };
+// Function to upload file to Firebase Storage associated with the user
+const uploadFile = (userId, file) => {
+  const storageRef = ref(storage, `users/${userId}/files/${file.name}`);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
+  return new Promise((resolve, reject) => {
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        reject(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(resolve).catch(reject);
+      }
+    );
+  });
+};
+
+// Function to delete the file from Firebase Storage
+const deleteFile = (userId, fileName) => {
+  const fileRef = ref(storage, `users/${userId}/files/${fileName}`);
+  return deleteObject(fileRef);
+};
+
+export { auth, signInWithGoogle, logout, storage, uploadFile, deleteFile };
