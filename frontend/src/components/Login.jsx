@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from "react";
 import "./Login.module.css";
-import { signInWithGoogle, logout, auth, storage, uploadFile, deleteFile } from "../firebase/firebase";
+import {
+  signInWithGoogle,
+  logout,
+  auth,
+  storage,
+  uploadFile,
+  deleteFile,
+} from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { saveGameState, loadGameState } from "./gameState"; // Import game state functions
+import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
+  const glassStyle = {
+    background: "rgba(109, 108, 108, 0.5)",
+    borderRadius: "16px",
+    boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+    backdropFilter: "blur(5px)",
+    WebkitBackdropFilter: "blur(5px)",
+    border: "1px solid rgba(144, 144, 144, 0.49)",
+  };
   const [user, setUser] = useState(null);
   const [file, setFile] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -25,7 +41,7 @@ const Login = () => {
     const interval = setInterval(() => {
       setTimeTaken((prevTime) => prevTime + 1); // Increment time every second
     }, 1000);
-    
+
     setTimerInterval(interval);
   };
 
@@ -74,7 +90,6 @@ const Login = () => {
     return () => unsubscribe();
   }, []);
 
-
   // Save game state whenever `cleared`, `level`, or `timeTaken` changes
   useEffect(() => {
     if (user) {
@@ -88,15 +103,14 @@ const Login = () => {
     const storageRef = ref(storage, `users/${userId}/files/`);
     listAll(storageRef)
       .then((res) => {
-
         const files = res.items.map((itemRef) =>
           getDownloadURL(itemRef).then((url) => ({ name: itemRef.name, url }))
         );
-        Promise.all(files).then((resolvedFiles) => {
-          setUploadedFiles(resolvedFiles.filter(file => file !== null));
-        });
-      })
-      .catch((error) => console.error("Error listing files: ", error));
+        //   Promise.all(files).then((resolvedFiles) => {
+        //     setUploadedFiles(resolvedFiles.filter(file => file !== null));
+        //   });
+        // })
+        // .catch((error) => console.error("Error listing files: ", error));
 
         const filesPromises = res.items.map(async (item) => {
           const url = await getDownloadURL(item);
@@ -110,13 +124,11 @@ const Login = () => {
       .catch((error) => {
         console.error("Error fetching files: ", error);
       });
-
   };
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
-
 
   // Upload file
   const handleUpload = () => {
@@ -138,7 +150,6 @@ const Login = () => {
 
   const handleDelete = (fileName) => {
     if (user) {
-
       deleteFile(user.uid, fileName)
         .then(() => {
           console.log("File deleted successfully");
@@ -164,13 +175,16 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <div className="left-panel">
+      <div className="left-panel py-10 px-8" style={glassStyle}>
         {user ? (
           <div className="card">
             <h2>Welcome, {user.displayName}</h2>
             <img src={user.photoURL} alt="User" className="user-avatar" />
             <p>{user.email}</p>
-            <p>Please upload the balance sheet, shareholder equity statement, and cashflow statement.2</p>
+            <p>
+              Please upload the balance sheet, shareholder equity statement, and
+              cashflow statement.
+            </p>
             <input type="file" onChange={handleFileChange} />
             <button onClick={handleUpload}>Upload File</button>
             <button onClick={logout}>Logout</button>
@@ -179,8 +193,16 @@ const Login = () => {
                 <h3>Your uploaded files:</h3>
                 {uploadedFiles.map((file, index) => (
                   <div key={index} className="file-item">
-                    <a href={file.url} target="_blank" rel="noopener noreferrer">{file.name}</a>
-                    <button onClick={() => handleDelete(file.name)}>Delete</button>
+                    <a
+                      href={file.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {file.name}
+                    </a>
+                    <button onClick={() => handleDelete(file.name)}>
+                      Delete
+                    </button>
                   </div>
                 ))}
               </div>
@@ -201,37 +223,28 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-/*    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      {user ? (
-        <>
-          <h2>Welcome, {user.displayName}</h2>
-          <img src={user.photoURL} alt="User" width="100" />
-          <p>{user.email}</p>
-          <button onClick={handleLogout}>Logout</button>
-
-          //Display game state 
-          <div>
-            <p>Current Level: {level}</p>
-            <p>Time Taken: {timeTaken}s</p>
-            <p>{cleared ? "Level Cleared!" : "Level Not Cleared"}</p>
-          </div>
-
-          // Simulate clearing the room
-          <button onClick={handleClearRoom}>Clear Room (Finish Level)</button>
-
-          //File upload section
-          <div>
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={handleUpload}>Upload File</button>
-            {fileUrl && <p>File uploaded successfully: <a href={fileUrl} target="_blank" rel="noopener noreferrer">View File</a></p>}
-          </div>
-*/
-
-            <button>Submit</button>
-            <button onClick={signInWithGoogle}>Sign in with Google</button>
+            <div className="flex flex-col items-center justify-center">
+              <button className="mb-[20px]">Sign Up</button>
+              <div className="flex items-center">
+                <hr className="w-16 border-gray-300" />
+                <span className="px-3 text-gray-500">or</span>
+                <hr className="w-16 border-gray-300" />
+              </div>
+              <button
+                onClick={signInWithGoogle}
+                className="flex items-center justify-center"
+              >
+                <FaGoogle className="mr-2" />
+                Sign in with Google
+              </button>
+            </div>
             <div className="footer">
-              <p>Have an account? <a href="#">Sign in</a></p>
-              <p><a href="#">Terms & Conditions</a></p>
+              <p className="pt-[10px]">
+                Have an account?{" "}
+                <a href="#" className="font-bold">
+                  Sign in
+                </a>
+              </p>
             </div>
           </div>
         )}
@@ -239,5 +252,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
