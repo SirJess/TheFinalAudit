@@ -6,7 +6,7 @@ import json
 def generate():
   client = genai.Client(
       vertexai=True,
-      project="PROJECT_ID",
+      project="nth-segment-450320-i5",
       location="us-central1",
   )
 
@@ -90,7 +90,5 @@ def generate():
             print("Generated text saved to output_balance_sheet.txt (as plain text)")
 
 
-
-generate()
 
 generate()
