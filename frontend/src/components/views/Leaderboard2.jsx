@@ -18,7 +18,7 @@ const Leaderboard = () => {
   ]);
 
   const handleBackToMenu = () => {
-    navigate("/levels"); // Navigate back to the main menu
+    navigate("/intro2"); // Navigate back to the main menu
   };
 
   return (
@@ -70,7 +70,7 @@ const Leaderboard = () => {
           className="mt-6 py-3 px-6 bg-yellow-500 text-white rounded-lg hover:bg-yellow-400 transition-all shadow-md"
           onClick={handleBackToMenu}
         >
-          Back to Levels
+          Ending Scene
         </button>
       </div>
     </div>
