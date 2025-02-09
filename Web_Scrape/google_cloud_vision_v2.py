@@ -1,3 +1,4 @@
+import sys
 from google.cloud import vision
 from google.cloud import storage
 from google.oauth2 import service_account
@@ -63,8 +64,11 @@ def process_pdf_with_ocr(bucket_name, object_path):
     print(f"OCR text saved to {output_txt_path}")
     return output_txt_path
 
-# Example Usage
-bucket_name = "nth-segment-450320-i5.firebasestorage.app"
-object_path = "users/qt1gelPXt3WoI3gTLCbsb1S7yM33/files/walmart_2024_annual_report.pdf"
-
-process_pdf_with_ocr(bucket_name, object_path)
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python google_cloud_vision_v2.py <bucket_name> <object_path>")
+        sys.exit(1)
+    
+    bucket_name = sys.argv[1]
+    object_path = sys.argv[2]
+    process_pdf_with_ocr(bucket_name, object_path)

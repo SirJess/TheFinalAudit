@@ -24,7 +24,7 @@ function useAuth() {
   return { user, loading };
 }
 
-export default function EscapeRoom() {
+export default function EscapeRoom2() {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const hotspots = [

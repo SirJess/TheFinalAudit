@@ -1,11 +1,15 @@
 import escapeRoom1 from "../../assets/escapeRoom1.jpg";
+import sheet1 from "../../assets/sheet1.png";
+import sheet2 from "../../assets/sheet2.png";
+import sheet3 from "../../assets/sheet3.png";
 import learnBalanceSheet from "../../assets/learnBalanceSheet.png";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
-import process_pdf_with_ocr from "../../../Web_Scrape/google_cloud_vision_v2.py";
+import BalanceSheetQuiz from "../missingBalanceSheet/BalanceSheetQuiz";
+import { useNavigate } from "react-router-dom";
 
 function useAuth() {
   const [user, setUser] = useState(null);
@@ -20,13 +24,34 @@ function useAuth() {
 
     return () => unsubscribe(); // Clean up the listener on unmount
   }, []);
-  console.log(user, user.uid);
+  console.log(user);
   return { user, loading };
 }
 
 export default function EscapeRoom() {
   const [selectedItem, setSelectedItem] = useState(null);
   const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  // const handleProcessPdf = async () => {
+  //   const bucket_name = "nth-segment-450320-i5.firebasestorage.app";
+  //   const object_path =
+  //     "users/" + user.uid + "/files/" + "UGA_annual_report.pdf";
+  //   try {
+  //     const response = await fetch("http://localhost:5000/process-pdf", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ bucket: bucket_name, object_path: object_path }),
+  //     });
+  //     const result = await response.text();
+  //     console.log("Processed PDF text file path:", result);
+  //   } catch (error) {
+  //     console.error("Error processing PDF:", error);
+  //   }
+  // };
+
   const hotspots = [
     {
       id: "poster",
@@ -44,7 +69,7 @@ export default function EscapeRoom() {
       y: "785px",
       width: "78px",
       height: "33px",
-      image: learnBalanceSheet,
+      image: sheet1,
       borderRadius: "12px",
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
@@ -54,7 +79,7 @@ export default function EscapeRoom() {
       y: "825px",
       width: "60px",
       height: "33px",
-      image: learnBalanceSheet,
+      image: sheet2,
       borderRadius: "12px",
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
@@ -64,7 +89,7 @@ export default function EscapeRoom() {
       y: "500px",
       width: "111px",
       height: "80px",
-      image: learnBalanceSheet,
+      image: "",
       borderRadius: "0px",
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
@@ -74,38 +99,8 @@ export default function EscapeRoom() {
       y: "610px",
       width: "70px",
       height: "19px",
-      image: learnBalanceSheet,
+      image: sheet3,
       borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
-    },
-    {
-      id: "share_folder_equity1",
-      x: "1548px",
-      y: "834px",
-      width: "79px",
-      height: "30px",
-      image: learnBalanceSheet,
-      borderRadius: "0px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
-    },
-    {
-      id: "share_folder_equity2",
-      x: "1370px",
-      y: "334px",
-      width: "45px",
-      height: "80px",
-      image: learnBalanceSheet,
-      borderRadius: "0px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
-    },
-    {
-      id: "share_folder_equity3",
-      x: "1010px",
-      y: "360px",
-      width: "45px",
-      height: "40px",
-      image: learnBalanceSheet,
-      borderRadius: "0px",
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
   ];
@@ -144,7 +139,12 @@ export default function EscapeRoom() {
           {/* Ensure overlay is on top */}
           <Dialog.Content className="fixed inset-0 flex justify-center items-center p-4 z-30">
             <div className="bg-white p-4 rounded-lg">
-              <img src={selectedItem.image} alt="Popup" className="w-full" />
+              {selectedItem.id === "enter_balance_sheet" ? (
+                <BalanceSheetQuiz />
+              ) : (
+                <img src={selectedItem.image} alt="Popup" className="w-full" />
+              )}
+
               <button
                 onClick={() => setSelectedItem(null)}
                 className="mt-4 px-4 py-2 bg-red-500 text-white rounded"

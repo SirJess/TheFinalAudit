@@ -7,6 +7,8 @@ import Title_screen from "./components/views/Title_screen";
 import Levels from "./components/Levels";
 import AllLevels from "./components/AllLevels";
 import Intro1 from "./components/views/Intro1";
+import Leaderboard1 from "./components/views/Leaderboard1";
+import Leaderboard2 from "./components/views/Leaderboard2";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/levels" element={<AllLevels />} />
         <Route path="/escape-room-1" element={<EscapeRoom1 />} />
         <Route path="/escape-room-2" element={<EscapeRoom2 />} />
+        <Route path="/leaderboard1" element={<Leaderboard1 />} />
+        <Route path="/leaderboard2" element={<Leaderboard2 />} />
       </Routes>
     </Router>
   );
