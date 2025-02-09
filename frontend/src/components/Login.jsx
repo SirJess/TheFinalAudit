@@ -25,6 +25,7 @@ const Login = () => {
   const [user, setUser] = useState(null);
   const [file, setFile] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [fileUrl, setFileUrl] = useState("");
 
   const [username, setUsername] = useState(""); //fill in username
   const [password, setPassword] = useState("");
@@ -193,13 +194,7 @@ const Login = () => {
                 <h3>Your uploaded files:</h3>
                 {uploadedFiles.map((file, index) => (
                   <div key={index} className="file-item">
-                    <a
-                      href={file.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {file.name}
-                    </a>
+                    <a>{file.name}</a>
                     <button onClick={() => handleDelete(file.name)}>
                       Delete
                     </button>
@@ -232,7 +227,7 @@ const Login = () => {
               </div>
               <button
                 onClick={signInWithGoogle}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center text-black"
               >
                 <FaGoogle className="mr-2" />
                 Sign in with Google
