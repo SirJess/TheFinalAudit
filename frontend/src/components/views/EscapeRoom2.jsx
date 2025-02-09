@@ -12,7 +12,7 @@ export default function EscapeRoom() {
     {
       id: "explain_EBITDA",
       x: "370px",
-      y: "150px",
+      y: "180px",
       width: "90px",
       height: "140px",
       image: what_is_ebitda,
@@ -23,7 +23,7 @@ export default function EscapeRoom() {
     {
       id: "enter_EBITDA",
       x: "570px",
-      y: "220px",
+      y: "250px",
       width: "200px",
       height: "150px",
       image: learnBalanceSheet, // Change this to the poster image path
@@ -35,8 +35,8 @@ export default function EscapeRoom() {
     {
       id: "depreciation_amortization",
       x: "940px",
-      y: "240px",
-      width: "175px",
+      y: "270px",
+      width: "180px",
       height: "160px",
       image: learnBalanceSheet, // Change this to the poster image path
       borderRadius: "12px", // Makes edges softer
@@ -46,8 +46,8 @@ export default function EscapeRoom() {
     {
       id: "lost_your_data",
       x: "1145px",
-      y: "512px",
-      width: "70px",
+      y: "545px",
+      width: "75px",
       height: "40px",
       image: learnBalanceSheet, // Change this to the poster image path
       borderRadius: "0px", // Makes edges softer
@@ -57,7 +57,7 @@ export default function EscapeRoom() {
     {
       id: "lost_your_data",
       x: "495px",
-      y: "740px",
+      y: "765px",
       width: "90px",
       height: "40px",
       image: learnBalanceSheet, // Change this to the poster image path
