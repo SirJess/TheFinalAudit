@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import escapeRoom1 from "../../assets/escapeRoom1.jpg";
 
 export default function Intro1() {
   const navigate = useNavigate(); // Initialize navigate function
@@ -9,7 +10,12 @@ export default function Intro1() {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen justify-center bg-cover bg-center bg-no-repeat bg-fixed bg-opacity-50">
+    <div
+      style={{
+        backgroundImage: `url(${escapeRoom1})`,
+      }}
+      className="flex flex-col items-center h-screen justify-center bg-cover bg-center bg-no-repeat bg-fixed bg-opacity-50"
+    >
       {/* Animated title */}
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
