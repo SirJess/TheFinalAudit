@@ -1,8 +1,8 @@
-/* Login.module.css */
+Login.module.css
 
-body {
+/* body {
   font-family: "Poppins", sans-serif;
-  background-image: url("/src/assets/background1.avif");
+  background-image: url("/src/assets/background1.jpg");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -10,9 +10,9 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-}
+} */
 
-.login-container {
+/* .login-container {
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -23,8 +23,18 @@ body {
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   position: relative;
-  z-index: 2;
+} */
+.login-container {
+  background-image: url("../assets/background1.jpg"); /* Only applied to Login */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 
 .left-panel {
   flex: 1;

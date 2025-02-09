@@ -26,7 +26,7 @@ const signInWithGoogle = async () => {
     const res = await fetch("http://localhost:8080/verify-token", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token }),
+      body: JSON.stringify({ token, uid: userUid }),
     });
 
     const data = await res.json();

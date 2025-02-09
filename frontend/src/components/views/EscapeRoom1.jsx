@@ -16,7 +16,7 @@ export default function EscapeRoom() {
       height: "92px",
       image: learnBalanceSheet,
       borderRadius: "0px",
-      boxShadow: "0px 0px 10px 4px rgba(255, 255, 0, 0.6)", // Change this to the poster image path
+      boxShadow: "0px 0px 10px 4px rgba(255, 255, 0, 0.6)",
     },
     {
       id: "assets",
@@ -24,19 +24,18 @@ export default function EscapeRoom() {
       y: "785px",
       width: "78px",
       height: "33px",
-      image: learnBalanceSheet, // Change this to the poster image path
-      borderRadius: "12px", // Makes edges softer
+      image: learnBalanceSheet,
+      borderRadius: "12px",
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
-
     {
       id: "liability",
       x: "298px",
       y: "825px",
       width: "60px",
       height: "33px",
-      image: learnBalanceSheet, // Change this to the poster image path
-      borderRadius: "12px", // Makes edges softer
+      image: learnBalanceSheet,
+      borderRadius: "12px",
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
     {
@@ -45,8 +44,8 @@ export default function EscapeRoom() {
       y: "500px",
       width: "111px",
       height: "80px",
-      image: learnBalanceSheet, // Change this to the poster image path
-      borderRadius: "0px", // Makes edges softer
+      image: learnBalanceSheet,
+      borderRadius: "0px",
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
     {
@@ -55,18 +54,8 @@ export default function EscapeRoom() {
       y: "610px",
       width: "70px",
       height: "19px",
-      image: learnBalanceSheet, // Change this to the poster image path
-      borderRadius: "12px", // Makes edges softer
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
-    },
-    {
-      id: "profit",
-      x: "1454px",
-      y: "610px",
-      width: "70px",
-      height: "19px",
-      image: learnBalanceSheet, // Change this to the poster image path
-      borderRadius: "12px", // Makes edges softer
+      image: learnBalanceSheet,
+      borderRadius: "12px",
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
     {
@@ -75,24 +64,26 @@ export default function EscapeRoom() {
       y: "834px",
       width: "79px",
       height: "30px",
-      image: learnBalanceSheet, // Change this to the poster image path
-      borderRadius: "0px", // Makes edges softer
+      image: learnBalanceSheet,
+      borderRadius: "0px",
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
   ];
 
   return (
     <div className="relative w-full h-screen bg-black">
+      {/* Background Image */}
       <img
-        src={escapeRoom1} // Background image
+        src={escapeRoom1}
         alt="Escape Room"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover z-0"
       />
 
+      {/* Hotspots */}
       {hotspots.map((spot) => (
         <motion.div
           key={spot.id}
-          className="absolute bg-transparent cursor-pointer"
+          className="absolute bg-transparent cursor-pointer z-10" // Set z-index to ensure it's above the background
           style={{
             left: spot.x,
             top: spot.y,
@@ -106,10 +97,11 @@ export default function EscapeRoom() {
         />
       ))}
 
+      {/* Popup Dialog */}
       {selectedItem && (
         <Dialog.Root open={true} onOpenChange={() => setSelectedItem(null)}>
-          <Dialog.Overlay className="fixed inset-0 bg-black opacity-50" />
-          <Dialog.Content className="fixed inset-0 flex justify-center items-center p-4">
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 z-20" /> {/* Ensure overlay is on top */}
+          <Dialog.Content className="fixed inset-0 flex justify-center items-center p-4 z-30">
             <div className="bg-white p-4 rounded-lg">
               <img src={selectedItem.image} alt="Popup" className="w-full" />
               <button
