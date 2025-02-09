@@ -10,7 +10,7 @@ function App() {
       <Routes>
         {/* <Route path="/" element={<Login />} /> */}
         {/* <Route path="/" element={<EscapeRoom1 />} /> */}
-        <Route path="/" element={<EscapeRoom2 />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </Router>
   );
