@@ -12,12 +12,15 @@ import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { saveGameState, loadGameState } from "./gameState";
 import { FaGoogle } from "react-icons/fa";
 import background1 from "../assets/background1.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
   const [file, setFile] = useState(null);
   const glassStyle = {
-    background: "rgba(109, 108, 108, 0.5)",
+    background: "rgba(109, 108, 108, 0.7)",
     borderRadius: "16px",
     boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
     backdropFilter: "blur(5px)",
@@ -103,12 +106,17 @@ const Login = () => {
       alert("Please select a file first.");
       return;
     }
+
     if (user) {
       uploadFile(user.uid, file)
-        .then(() => {
+        .then((downloadURL) => {
+          setFileUrl(downloadURL);
           fetchUserFiles(user.uid);
+          navigate("/title-screen");
         })
-        .catch((error) => console.error("Upload failed", error));
+        .catch((error) => {
+          console.error("Upload failed", error);
+        });
     }
   };
 
@@ -131,16 +139,29 @@ const Login = () => {
   };
 
   return (
-    <div style={{backgroundImage: `url(${background1})`,
-    }} className="min-h-screen flex items-center justify-center bg-cover bg-center">
-
-      <div style = {glassStyle} className="bg-gray-700 bg-opacity-50 rounded-2xl shadow-lg p-10 w-96">
+    <div
+      style={{ backgroundImage: `url(${background1})` }}
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
+    >
+      <div
+        style={glassStyle}
+        className="bg-gray-700 bg-opacity-50 rounded-2xl shadow-lg p-10 w-96"
+      >
         {user ? (
           <div className="text-white text-center">
-            <h2 className="text-2xl font-bold mb-4">Welcome, {user.displayName}</h2>
-            <img src={user.photoURL} alt="User" className="w-20 h-20 rounded-full mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-4">
+              Welcome, {user.displayName}
+            </h2>
+            <img
+              src={user.photoURL}
+              alt="User"
+              className="w-20 h-20 rounded-full mx-auto mb-4"
+            />
             <p>{user.email}</p>
-            <p className="mt-4">Please upload the balance sheet, shareholder equity statement, and cashflow statement.</p>
+            <p className="mt-4">
+              Please upload the balance sheet, shareholder equity statement, and
+              cashflow statement.
+            </p>
             <input
               type="file"
               onChange={handleFileChange}
@@ -162,8 +183,14 @@ const Login = () => {
               <div className="mt-6">
                 <h3 className="text-xl font-semibold">Your uploaded files:</h3>
                 {uploadedFiles.map((file, index) => (
-                  <div key={index} className="flex items-center justify-between mt-2">
-                    <a href={file.url} className="text-yellow-400 hover:underline">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between mt-2"
+                  >
+                    <a
+                      href={file.url}
+                      className="text-yellow-400 hover:underline"
+                    >
                       {file.name}
                     </a>
                     <button
@@ -212,7 +239,10 @@ const Login = () => {
             <div className="mt-4">
               <p>
                 Have an account?{" "}
-                <a href="#" className="font-bold text-yellow-400 hover:underline">
+                <a
+                  href="#"
+                  className="font-bold text-yellow-400 hover:underline"
+                >
                   Sign in
                 </a>
               </p>

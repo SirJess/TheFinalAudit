@@ -68,6 +68,26 @@ export default function EscapeRoom() {
       borderRadius: "0px",
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
+    {
+      id: "share_folder_equity",
+      x: "1370px",
+      y: "334px",
+      width: "45px",
+      height: "80px",
+      image: learnBalanceSheet,
+      borderRadius: "0px",
+      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+    },
+    {
+      id: "share_folder_equity",
+      x: "1010px",
+      y: "360px",
+      width: "45px",
+      height: "40px",
+      image: learnBalanceSheet,
+      borderRadius: "0px",
+      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+    },
   ];
 
   return (
@@ -100,7 +120,8 @@ export default function EscapeRoom() {
       {/* Popup Dialog */}
       {selectedItem && (
         <Dialog.Root open={true} onOpenChange={() => setSelectedItem(null)}>
-          <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 z-20" /> {/* Ensure overlay is on top */}
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 z-20" />{" "}
+          {/* Ensure overlay is on top */}
           <Dialog.Content className="fixed inset-0 flex justify-center items-center p-4 z-30">
             <div className="bg-white p-4 rounded-lg">
               <img src={selectedItem.image} alt="Popup" className="w-full" />

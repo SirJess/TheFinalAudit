@@ -6,14 +6,15 @@ import EscapeRoom2 from "./components/views/EscapeRoom2";
 import Title_screen from "./components/views/Title_screen";
 import Levels from "./components/Levels";
 import AllLevels from "./components/AllLevels";
+import Intro1 from "./components/views/Intro1";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-
-        {/* <Route path="/" element={<Title_screen />} /> */}
+        <Route path="/intro1" element={<Intro1 />} />
+        <Route path="/title-screen" element={<Title_screen />} />
         <Route path="/levels" element={<AllLevels />} />
         <Route path="/escape-room-1" element={<EscapeRoom1 />} />
         <Route path="/escape-room-2" element={<EscapeRoom2 />} />
