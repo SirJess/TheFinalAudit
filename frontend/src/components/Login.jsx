@@ -14,6 +14,14 @@ import { saveGameState, loadGameState } from "./gameState"; // Import game state
 import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
+  const glassStyle = {
+    background: "rgba(109, 108, 108, 0.5)",
+    borderRadius: "16px",
+    boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+    backdropFilter: "blur(5px)",
+    WebkitBackdropFilter: "blur(5px)",
+    border: "1px solid rgba(144, 144, 144, 0.49)",
+  };
   const [user, setUser] = useState(null);
   const [file, setFile] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -167,7 +175,7 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <div className="left-panel ">
+      <div className="left-panel py-10 px-8" style={glassStyle}>
         {user ? (
           <div className="card">
             <h2>Welcome, {user.displayName}</h2>
