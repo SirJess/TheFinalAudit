@@ -37,10 +37,10 @@ export default function EscapeRoom2() {
   const [timerInterval, setTimerInterval] = useState(null); // Fixed declaration
 
   // Hardcoded quiz values
-  const netIncome = 50000;
-  const interestExpense = 8000;
-  const taxes = 12000;
-  const depreciationAmortization = 10000;
+  const netIncome = 16270;
+  const interestExpense = 2519;
+  const taxes = 5879;
+  const depreciationAmortization = 11853;
   const correctEBITDA =
     netIncome + interestExpense + taxes + depreciationAmortization;
 
