@@ -10,14 +10,14 @@ import AllLevels from "./components/AllLevels";
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
-        {/* <Route path="/" element={<EscapeRoom1 />} /> */}
-        {/* <Route path="/" element={<EscapeRoom2 />} /> */}
+      <Route>
+        <Route path="/" element={<Login />} />
+
         <Route path="/" element={<Title_screen />} />
         <Route path="/levels" element={<AllLevels />} />
         <Route path="/escape-room-1" element={<EscapeRoom1 />} />
         <Route path="/escape-room-2" element={<EscapeRoom2 />} />
+
       </Routes>
     </Router>
   );

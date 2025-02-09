@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./Login.module.css";
 import { signInWithGoogle, logout, auth, storage, uploadFile, deleteFile } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
@@ -7,8 +8,11 @@ import { saveGameState, loadGameState } from "./gameState"; // Import game state
 const Login = () => {
   const [user, setUser] = useState(null);
   const [file, setFile] = useState(null);
-  const [fileUrl, setFileUrl] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
+
+  const [username, setUsername] = useState(""); //fill in username
+  const [password, setPassword] = useState("");
+
   const [level, setLevel] = useState(1);
   const [timeTaken, setTimeTaken] = useState(0);
   const [cleared, setCleared] = useState(false);
@@ -34,6 +38,7 @@ const Login = () => {
   };
 
   // Listen for user authentication state changes
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       stopTimer(); // Stop timer for previous user
@@ -69,6 +74,7 @@ const Login = () => {
     return () => unsubscribe();
   }, []);
 
+
   // Save game state whenever `cleared`, `level`, or `timeTaken` changes
   useEffect(() => {
     if (user) {
@@ -77,10 +83,21 @@ const Login = () => {
   }, [cleared, level, timeTaken, user]); // Save state when these values change
 
   // Fetch user's uploaded files
+
   const fetchUserFiles = (userId) => {
     const storageRef = ref(storage, `users/${userId}/files/`);
     listAll(storageRef)
       .then((res) => {
+
+        const files = res.items.map((itemRef) =>
+          getDownloadURL(itemRef).then((url) => ({ name: itemRef.name, url }))
+        );
+        Promise.all(files).then((resolvedFiles) => {
+          setUploadedFiles(resolvedFiles.filter(file => file !== null));
+        });
+      })
+      .catch((error) => console.error("Error listing files: ", error));
+
         const filesPromises = res.items.map(async (item) => {
           const url = await getDownloadURL(item);
           return { name: item.name, url };
@@ -93,12 +110,13 @@ const Login = () => {
       .catch((error) => {
         console.error("Error fetching files: ", error);
       });
+
   };
 
-  // Handle file selection
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
+
 
   // Upload file
   const handleUpload = () => {
@@ -106,7 +124,6 @@ const Login = () => {
       alert("Please select a file first.");
       return;
     }
-
     if (user) {
       uploadFile(user.uid, file)
         .then((downloadURL) => {
@@ -119,9 +136,9 @@ const Login = () => {
     }
   };
 
-  // Handle file deletion
   const handleDelete = (fileName) => {
     if (user) {
+
       deleteFile(user.uid, fileName)
         .then(() => {
           console.log("File deleted successfully");
@@ -146,7 +163,45 @@ const Login = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
+    <div className="login-container">
+      <div className="left-panel">
+        {user ? (
+          <div className="card">
+            <h2>Welcome, {user.displayName}</h2>
+            <img src={user.photoURL} alt="User" className="user-avatar" />
+            <p>{user.email}</p>
+            <p>Please upload the balance sheet, shareholder equity statement, and cashflow statement.2</p>
+            <input type="file" onChange={handleFileChange} />
+            <button onClick={handleUpload}>Upload File</button>
+            <button onClick={logout}>Logout</button>
+            {uploadedFiles.length > 0 && (
+              <div>
+                <h3>Your uploaded files:</h3>
+                {uploadedFiles.map((file, index) => (
+                  <div key={index} className="file-item">
+                    <a href={file.url} target="_blank" rel="noopener noreferrer">{file.name}</a>
+                    <button onClick={() => handleDelete(file.name)}>Delete</button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="card">
+            <h2>Create an account</h2>
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+/*    <div style={{ textAlign: "center", marginTop: "50px" }}>
       {user ? (
         <>
           <h2>Welcome, {user.displayName}</h2>
@@ -154,39 +209,33 @@ const Login = () => {
           <p>{user.email}</p>
           <button onClick={handleLogout}>Logout</button>
 
-          {/* Display game state */}
+          //Display game state 
           <div>
             <p>Current Level: {level}</p>
             <p>Time Taken: {timeTaken}s</p>
             <p>{cleared ? "Level Cleared!" : "Level Not Cleared"}</p>
           </div>
 
-          {/* Simulate clearing the room */}
+          // Simulate clearing the room
           <button onClick={handleClearRoom}>Clear Room (Finish Level)</button>
 
-          {/* File upload section */}
+          //File upload section
           <div>
             <input type="file" onChange={handleFileChange} />
             <button onClick={handleUpload}>Upload File</button>
             {fileUrl && <p>File uploaded successfully: <a href={fileUrl} target="_blank" rel="noopener noreferrer">View File</a></p>}
           </div>
+*/
 
-          {/* Show uploaded files */}
-          {uploadedFiles.length > 0 && (
-            <div>
-              <h3>Your uploaded files:</h3>
-              {uploadedFiles.map((file, index) => (
-                <div key={index}>
-                  <a href={file.url} target="_blank" rel="noopener noreferrer">{file.name}</a>
-                  <button onClick={() => handleDelete(file.name)}>Delete</button>
-                </div>
-              ))}
+            <button>Submit</button>
+            <button onClick={signInWithGoogle}>Sign in with Google</button>
+            <div className="footer">
+              <p>Have an account? <a href="#">Sign in</a></p>
+              <p><a href="#">Terms & Conditions</a></p>
             </div>
-          )}
-        </>
-      ) : (
-        <button onClick={signInWithGoogle}>Sign in with Google</button>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
