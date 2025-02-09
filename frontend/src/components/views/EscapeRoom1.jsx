@@ -3,10 +3,30 @@ import learnBalanceSheet from "../../assets/learnBalanceSheet.png";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
+import process_pdf_with_ocr from "../../../Web_Scrape/google_cloud_vision_v2.py";
+
+function useAuth() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe(); // Clean up the listener on unmount
+  }, []);
+  console.log(user, user.uid);
+  return { user, loading };
+}
 
 export default function EscapeRoom() {
   const [selectedItem, setSelectedItem] = useState(null);
-
+  const { user, loading } = useAuth();
   const hotspots = [
     {
       id: "poster",
@@ -59,7 +79,7 @@ export default function EscapeRoom() {
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
     {
-      id: "share_folder_equity",
+      id: "share_folder_equity1",
       x: "1548px",
       y: "834px",
       width: "79px",
@@ -69,7 +89,7 @@ export default function EscapeRoom() {
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
     {
-      id: "share_folder_equity",
+      id: "share_folder_equity2",
       x: "1370px",
       y: "334px",
       width: "45px",
@@ -79,7 +99,7 @@ export default function EscapeRoom() {
       boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
     },
     {
-      id: "share_folder_equity",
+      id: "share_folder_equity3",
       x: "1010px",
       y: "360px",
       width: "45px",

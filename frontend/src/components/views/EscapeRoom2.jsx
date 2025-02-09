@@ -4,6 +4,25 @@ import what_is_ebitda from "../../assets/what_is_ebitda.png";
 import { useState } from "react";
 import { motion, transform } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
+
+function useAuth() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe(); // Clean up the listener on unmount
+  }, []);
+  console.log(user, user.uid);
+  return { user, loading };
+}
 
 export default function EscapeRoom() {
   const [selectedItem, setSelectedItem] = useState(null);
