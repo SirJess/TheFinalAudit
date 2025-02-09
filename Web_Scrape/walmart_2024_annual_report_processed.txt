@@ -1,0 +1,467 @@
+(Amounts in millions)
+ASSETS
+Current assets:
+Cash and cash equivalents
+Receivables, net
+Inventories
+Prepaid expenses and other
+Total current assets
+Property and equipment, net
+Operating lease right-of-use assets
+Finance lease right-of-use assets, net
+Goodwill
+Other long-term assets
+Total assets
+Walmart Inc.
+Consolidated Balance Sheets
+LIABILITIES, REDEEMABLE NONCONTROLLING INTEREST, AND EQUITY
+Current liabilities:
+Short-term borrowings
+Accounts payable
+Accrued liabilities
+Accrued income taxes
+Long-term debt due within one year
+Operating lease obligations due within one year
+Finance lease obligations due within one year
+Total current liabilities
+Long-term debt
+Long-term operating lease obligations
+Long-term finance lease obligations
+Deferred income taxes and other
+Commitments and contingencies
+Redeemable noncontrolling interest
+Equity:
+Common stock
+Capital in excess of par value
+Retained earnings
+Accumulated other comprehensive loss
+Total Walmart shareholders' equity
+Noncontrolling interest
+Total equity
+Total liabilities, redeemable noncontrolling interest, and equity
+See accompanying notes.
+56
+94
+As of January 31,
+2024
+2023
+$
+9,867
+$
+8,625
+8,796
+7,933
+54,892
+56,576
+3,322
+2,521
+76,877
+75,655
+110,810
+100,760
+13,673
+13,555
+5,855
+4,919
+28,113
+28,174
+17,071
+20,134
+$
+252,399
+$
+243,197
+$
+878 $
+372
+56,812
+53,742
+28,759
+31,126
+307
+727
+3,447
+4,191
+1,487
+1,473
+725
+567
+92,415
+92,198
+36,132
+34,649
+12,943
+12,828
+5,709
+4,843
+14,629
+14,688
+222
+237
+805
+808
+4,544
+4,430
+89,814
+83,135
+(11,302)
+(11,680)
+83,861
+76,693
+6,488
+7,061
+90,349
+83,754
+$
+252,399
+$
+243,197Walmart Inc.
+Consolidated Statements of Shareholders' Equity
+Accumulated
+Total
+Capital in
+(Amounts in millions)
+Shares
+Balances as of February 1, 2021
+Consolidated net income
+Other comprehensive income
+Amount
+Common Stock
+8,464 $ 846 $ 3,082
+Excess of
+Retained
+Other
+Comprehensive
+Walmart
+Shareholders'
+Noncontrolling
+Total
+Par Value
+Earnings
+Income (Loss)
+Equity
+Interest
+Equity
+$ 88,763
+$
+(11,766) $
+80,925 $
+6,606
+$
+87,531
+13,673
+13,673
+267
+13,940
+(loss), net of income taxes
+Cash dividends declared
+($0.7333 per share)
+Purchase of Company stock
+(210)
+Cash dividend declared to
+noncontrolling interest
+Sale of subsidiary stock
+Other
+30
+Balances as of January 31, 2022
+8,284
+828
+Consolidated net income
+Other comprehensive (loss), net
+of income taxes
+Cash dividends declared
+($0.7467 per share)
+Purchase of Company stock
+(221)
+Cash dividend declared to
+noncontrolling interest
+Purchase of noncontrolling
+interest
+Sale of subsidiary stock
+Other
+17
+Balances as of January 31, 2023
+8,080
+808
+($0.7600 per share)
+Consolidated net income
+Other comprehensive income, net
+of income taxes
+Cash dividends declared
+Purchase of Company stock
+Cash dividend declared to
+noncontrolling interest
+Purchase of noncontrolling
+interest
+(55)
+Sale of subsidiary stock
+|| | | རྱེ | | | | [bo| | | g| | |Zu| | ཥྱ | | |
+3,000
+3,000
+(230)
+2,770
+(6,152)
+(6,152)
+(6,152)
+(21)
+(412)
+(9,375)
+(9,808)
+(9,808)
+(416)
+(416)
+952
+952
+2,287
+3,239
+3
+665
+(5)
+663
+124
+787
+4,287
+86,904
+(8,766)
+83,253
+8,638
+91,891
+11,680
+11,680
+(388)
+11,292
+(1,652)
+(1,652)
+(404)
+(2,056)
+(6,114)
+(6,114)
+(6,114)
+(22)
+(518)
+(9,326)
+(9,866)
+(9,866)
+(449)
+(449)
+(18)
+(1,262)
+(1,280)
+(493)
+(1,773)
+48
+48
+18
+66
+2
+631
+624
+139
+763
+4,430
+83,135
+(11,680)
+76,693
+7,061
+83,754
+15,511
+15,511
+774
+16,285
+378
+378
+566
+944
+(6,140)
+(6,140)
+(6,140)
+(150)
+(2,635)
+(2,791)
+(2,791)
+☐
+(776)
+(776)
+(1,076)
+(1,076)
+(1,367)
+(2,443)
+562
+562
+154
+716
+Other
+29
+3
+778
+(57)
+724
+76
+800
+Balances as of January 31, 2024
+8,054
+805
+4,544
+89,814
+(11,302)
+83,861
+6,488
+90,349
+See accompanying notes.
+57
+57(Amounts in millions)
+Walmart Inc.
+Consolidated Statements of Cash Flows
+2024
+Fiscal Years Ended January 31,
+2023
+2022
+Cash flows from operating activities:
+Consolidated net income
+$
+16,270
+$
+11,292
+$
+13,940
+Adjustments to reconcile consolidated net income to net cash provided by operating activities:
+Depreciation and amortization
+11,853
+10,945
+10,658
+Net unrealized and realized (gains) and losses
+3,193
+1,683
+2,440
+Losses on disposal of business operations
+433
+Deferred income taxes
+(175)
+449
+(755)
+Loss on extinguishment of debt
+2,410
+Other operating activities
+2,642
+1,919
+1,652
+Changes in certain assets and liabilities, net of effects of acquisitions and dispositions:
+Receivables, net
+(797)
+240
+(1,796)
+Inventories
+2,017
+(528)
+(11,764)
+Accounts payable
+2,515
+(1,425)
+5,520
+Accrued liabilities
+Accrued income taxes
+Net cash provided by operating activities
+(1,324)
+4,393
+1,404
+(468)
+(127)
+39
+35,726
+28,841
+24,181
+Cash flows from investing activities:
+Payments for property and equipment
+(20,606)
+(16,857)
+(13,106)
+Proceeds from the disposal of property and equipment
+250
+170
+394
+Proceeds from disposal of certain operations, net of divested cash
+135
+7,935
+Payments for business acquisitions, net of cash acquired
+(740)
+(359)
+Other investing activities
+(1,057)
+(295)
+(879)
+Net cash used in investing activities
+(21,287)
+(17,722)
+(6,015)
+Cash flows from financing activities:
+Net change in short-term borrowings
+Proceeds from issuance of long-term debt
+Repayments of long-term debt
+Premiums paid to extinguish debt
+Dividends paid
+Purchase of Company stock
+Dividends paid to noncontrolling interest
+Purchase of noncontrolling interest
+Sale of subsidiary stock
+Other financing activities
+Net cash used in financing activities
+Effect of exchange rates on cash, cash equivalents and restricted cash
+Net increase (decrease) in cash, cash equivalents and restricted cash
+Change in cash and cash equivalents reclassified from assets held for sale
+Cash, cash equivalents and restricted cash at beginning of year
+Cash, cash equivalents and restricted cash at end of year
+Supplemental disclosure of cash flow information:
+Income taxes paid
+Interest paid
+See accompanying notes.
+58
+512
+(34)
+4,967
+5,041
+193
+6,945
+(4,217)
+(2,689)
+(13,010)
+(2,317)
+(6,140)
+(6,114)
+(6,152)
+(2,779)
+(9,920)
+(9,787)
+(763)
+(444)
+(424)
+(3,462)
+(827)
+716
+66
+3,239
+(2,248)
+(2,118)
+(1,515)
+(13,414)
+(17,039)
+(22,828)
+69
+(73)
+(140)
+1,094
+(5,993)
+(4,802)
+1,848
+8,841
+14,834
+17,788
+9,935
+8,841
+14,834
+$
+5,879 $
+2,519
+3,310 $
+5,918
+2,051
+2,237

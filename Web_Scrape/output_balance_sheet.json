@@ -1,0 +1,268 @@
+{
+  "Walmart Inc.": {
+    "Consolidated Balance Sheets": {
+      "As of January 31, 2024": {
+        "Amounts in millions": true,
+        "ASSETS": {
+          "Current assets": {
+            "Cash and cash equivalents": 9867,
+            "Receivables, net": 8796,
+            "Inventories": 54892,
+            "Prepaid expenses and other": 3322,
+            "Total current assets": 76877
+          },
+          "Property and equipment, net": 110810,
+          "Operating lease right-of-use assets": 13673,
+          "Finance lease right-of-use assets, net": 5855,
+          "Goodwill": 28113,
+          "Other long-term assets": 17071,
+          "Total assets": 252399
+        },
+        "LIABILITIES, REDEEMABLE NONCONTROLLING INTEREST, AND EQUITY": {
+          "Current liabilities": {
+            "Short-term borrowings": 878,
+            "Accounts payable": 56812,
+            "Accrued liabilities": 28759,
+            "Accrued income taxes": 307,
+            "Long-term debt due within one year": 3447,
+            "Operating lease obligations due within one year": 1487,
+            "Finance lease obligations due within one year": 725,
+            "Total current liabilities": 92415
+          },
+          "Long-term debt": 36132,
+          "Long-term operating lease obligations": 12943,
+          "Long-term finance lease obligations": 5709,
+          "Deferred income taxes and other": 14629,
+          "Commitments and contingencies": null,
+          "Redeemable noncontrolling interest": 222,
+          "Equity": {
+            "Common stock": 805,
+            "Capital in excess of par value": 4544,
+            "Retained earnings": 89814,
+            "Accumulated other comprehensive loss": -11302,
+            "Total Walmart shareholders' equity": 83861,
+            "Noncontrolling interest": 6488,
+            "Total equity": 90349
+          },
+          "Total liabilities, redeemable noncontrolling interest, and equity": 252399
+        }
+      },
+      "As of January 31, 2023": {
+        "Amounts in millions": true,
+        "ASSETS": {
+          "Current assets": {
+            "Cash and cash equivalents": 8625,
+            "Receivables, net": 7933,
+            "Inventories": 56576,
+            "Prepaid expenses and other": 2521,
+            "Total current assets": 75655
+          },
+          "Property and equipment, net": 100760,
+          "Operating lease right-of-use assets": 13555,
+          "Finance lease right-of-use assets, net": 4919,
+          "Goodwill": 28174,
+          "Other long-term assets": 20134,
+          "Total assets": 243197
+        },
+        "LIABILITIES, REDEEMABLE NONCONTROLLING INTEREST, AND EQUITY": {
+          "Current liabilities": {
+            "Short-term borrowings": 372,
+            "Accounts payable": 53742,
+            "Accrued liabilities": 31126,
+            "Accrued income taxes": 727,
+            "Long-term debt due within one year": 4191,
+            "Operating lease obligations due within one year": 1473,
+            "Finance lease obligations due within one year": 567,
+            "Total current liabilities": 92198
+          },
+          "Long-term debt": 34649,
+          "Long-term operating lease obligations": 12828,
+          "Long-term finance lease obligations": 4843,
+          "Deferred income taxes and other": 14688,
+          "Commitments and contingencies": null,
+          "Redeemable noncontrolling interest": 237,
+          "Equity": {
+            "Common stock": 808,
+            "Capital in excess of par value": 4430,
+            "Retained earnings": 83135,
+            "Accumulated other comprehensive loss": -11680,
+            "Total Walmart shareholders' equity": 76693,
+            "Noncontrolling interest": 7061,
+            "Total equity": 83754
+          },
+          "Total liabilities, redeemable noncontrolling interest, and equity": 243197
+        }
+      }
+    },
+    "Consolidated Statements of Shareholders' Equity": {
+      "Balances as of January 31, 2024": {
+        "Shares": 8054,
+        "Common Stock": 805,
+        "Capital in Excess of Par Value": 4544,
+        "Retained Earnings": 89814,
+        "Accumulated Other Comprehensive Income (Loss)": -11302,
+        "Total Walmart Shareholders' Equity": 83861,
+        "Noncontrolling Interest": 6488,
+        "Total Equity": 90349
+      }
+    },
+      "Consolidated Statements of Cash Flows": {
+      "Fiscal Years Ended January 31, 2024": {
+        "Amounts in millions": true,
+        "Cash flows from operating activities": {
+          "Consolidated net income": 16270,
+          "Adjustments to reconcile consolidated net income to net cash provided by operating activities": {
+            "Depreciation and amortization": 11853,
+            "Net unrealized and realized (gains) and losses": 3193,
+            "Losses on disposal of business operations": 433,
+            "Deferred income taxes": -175,
+            "Loss on extinguishment of debt": 2410,
+            "Other operating activities": 2642,
+            "Changes in certain assets and liabilities, net of effects of acquisitions and dispositions": {
+              "Receivables, net": -797,
+              "Inventories": 2017,
+              "Accounts payable": 2515,
+              "Accrued liabilities": -1324,
+              "Accrued income taxes": -468
+            }
+          },
+          "Net cash provided by operating activities": 35726
+        },
+        "Cash flows from investing activities": {
+          "Payments for property and equipment": -20606,
+          "Proceeds from the disposal of property and equipment": 250,
+          "Proceeds from disposal of certain operations, net of divested cash": 135,
+          "Payments for business acquisitions, net of cash acquired": -740,
+          "Other investing activities": -1057,
+          "Net cash used in investing activities": -21287
+        },
+        "Cash flows from financing activities": {
+          "Net change in short-term borrowings": 512,
+          "Proceeds from issuance of long-term debt": 5041,
+          "Repayments of long-term debt": -4217,
+          "Premiums paid to extinguish debt": -2317,
+          "Dividends paid": -6140,
+          "Purchase of Company stock": -2779,
+          "Dividends paid to noncontrolling interest": -763,
+          "Purchase of noncontrolling interest": -3462,
+          "Sale of subsidiary stock": 716,
+          "Other financing activities": -2248,
+          "Net cash used in financing activities": -13414
+        },
+        "Effect of exchange rates on cash, cash equivalents and restricted cash": 69,
+        "Net increase (decrease) in cash, cash equivalents and restricted cash": 1094,
+        "Change in cash and cash equivalents reclassified from assets held for sale": 1848,
+        "Cash, cash equivalents and restricted cash at beginning of year": 8841,
+        "Cash, cash equivalents and restricted cash at end of year": 9935,
+        "Supplemental disclosure of cash flow information": {
+          "Income taxes paid": 5879,
+          "Interest paid": 3310
+        }
+      },
+        "Fiscal Years Ended January 31, 2023": {
+        "Amounts in millions": true,
+        "Cash flows from operating activities": {
+          "Consolidated net income": 11292,
+          "Adjustments to reconcile consolidated net income to net cash provided by operating activities": {
+            "Depreciation and amortization": 10945,
+            "Net unrealized and realized (gains) and losses": 1683,
+            "Losses on disposal of business operations": null,
+            "Deferred income taxes": 449,
+            "Loss on extinguishment of debt": null,
+            "Other operating activities": 1919,
+            "Changes in certain assets and liabilities, net of effects of acquisitions and dispositions": {
+              "Receivables, net": 240,
+              "Inventories": -528,
+              "Accounts payable": -1425,
+              "Accrued liabilities": 4393,
+              "Accrued income taxes": -127
+            }
+          },
+          "Net cash provided by operating activities": 28841
+        },
+        "Cash flows from investing activities": {
+          "Payments for property and equipment": -16857,
+          "Proceeds from the disposal of property and equipment": 170,
+          "Proceeds from disposal of certain operations, net of divested cash": 7935,
+          "Payments for business acquisitions, net of cash acquired": -359,
+          "Other investing activities": -295,
+          "Net cash used in investing activities": -17722
+        },
+        "Cash flows from financing activities": {
+          "Net change in short-term borrowings": -34,
+          "Proceeds from issuance of long-term debt": 6945,
+          "Repayments of long-term debt": -2689,
+          "Premiums paid to extinguish debt": null,
+          "Dividends paid": -6114,
+          "Purchase of Company stock": -9920,
+          "Dividends paid to noncontrolling interest": -444,
+          "Purchase of noncontrolling interest": -827,
+          "Sale of subsidiary stock": 66,
+          "Other financing activities": -2118,
+          "Net cash used in financing activities": -17039
+        },
+        "Effect of exchange rates on cash, cash equivalents and restricted cash": -73,
+        "Net increase (decrease) in cash, cash equivalents and restricted cash": -5993,
+        "Change in cash and cash equivalents reclassified from assets held for sale": null,
+        "Cash, cash equivalents and restricted cash at beginning of year": 14834,
+        "Cash, cash equivalents and restricted cash at end of year": 8841,
+        "Supplemental disclosure of cash flow information": {
+          "Income taxes paid": 2519,
+          "Interest paid": 5918
+        }
+      },
+          "Fiscal Years Ended January 31, 2022": {
+        "Amounts in millions": true,
+        "Cash flows from operating activities": {
+          "Consolidated net income": 13940,
+          "Adjustments to reconcile consolidated net income to net cash provided by operating activities": {
+            "Depreciation and amortization": 10658,
+            "Net unrealized and realized (gains) and losses": 2440,
+            "Losses on disposal of business operations": null,
+            "Deferred income taxes": -755,
+            "Loss on extinguishment of debt": null,
+            "Other operating activities": 1652,
+            "Changes in certain assets and liabilities, net of effects of acquisitions and dispositions": {
+              "Receivables, net": -1796,
+              "Inventories": -11764,
+              "Accounts payable": 5520,
+              "Accrued liabilities": 1404,
+              "Accrued income taxes": 39
+            }
+          },
+          "Net cash provided by operating activities": 24181
+        },
+        "Cash flows from investing activities": {
+          "Payments for property and equipment": -13106,
+          "Proceeds from the disposal of property and equipment": 394,
+          "Proceeds from disposal of certain operations, net of divested cash": null,
+          "Payments for business acquisitions, net of cash acquired": null,
+          "Other investing activities": -879,
+          "Net cash used in investing activities": -6015
+        },
+        "Cash flows from financing activities": {
+          "Net change in short-term borrowings": 4967,
+          "Proceeds from issuance of long-term debt": 193,
+          "Repayments of long-term debt": -13010,
+          "Premiums paid to extinguish debt": null,
+          "Dividends paid": -6152,
+          "Purchase of Company stock": -9787,
+          "Dividends paid to noncontrolling interest": -424,
+          "Purchase of noncontrolling interest": -1515,
+          "Sale of subsidiary stock": 3239,
+          "Other financing activities": null,
+          "Net cash used in financing activities": -22828
+        },
+        "Effect of exchange rates on cash, cash equivalents and restricted cash": -140,
+        "Net increase (decrease) in cash, cash equivalents and restricted cash": -4802,
+        "Change in cash and cash equivalents reclassified from assets held for sale": null,
+        "Cash, cash equivalents and restricted cash at beginning of year": 14834,
+        "Cash, cash equivalents and restricted cash at end of year": 14834,
+        "Supplemental disclosure of cash flow information": {
+          "Income taxes paid": 2051,
+          "Interest paid": 2237
+        }
+      }
+    }
+  }
+}

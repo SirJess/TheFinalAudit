@@ -1,11 +1,10 @@
-import os
 from google.cloud import vision
 from google.cloud import storage
 from google.oauth2 import service_account
 import json
 
 # Path to your service account JSON credentials file
-SERVICE_ACCOUNT_FILE = 'astral-charter-450316-c2-5990a3d829f0.json'
+SERVICE_ACCOUNT_FILE = 'nth-segment-450320-i5-a59466854513.json'
 
 # Load the credentials from the JSON file
 credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE)
@@ -13,10 +12,11 @@ credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCO
 # Set up Google Cloud clients
 vision_client = vision.ImageAnnotatorClient(credentials=credentials)
 print("Google Cloud Vision client created with credentials loaded from the file.")
-storage_client = storage.Client()
+storage_client = storage.Client(credentials=credentials, project=credentials.project_id)
+
 
 # Define variables
-bucket_name = "balance_sheet_10k"  # Change this to your GCS bucket name
+bucket_name = "10k_billing"  # Change this to your GCS bucket name
 pdf_filename = "Walmart_balance_sheet.pdf"
 output_txt = "output.txt"
 
