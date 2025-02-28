@@ -10,7 +10,6 @@ import {
 } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
-import { saveGameState, loadGameState } from "./gameState";
 import { FaGoogle } from "react-icons/fa";
 import loginpageBackground from "../assets/loginpageBackground.png";
 import { useNavigate } from "react-router-dom";
@@ -57,16 +56,11 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [level, setLevel] = useState(1);
-  const [timeTaken, setTimeTaken] = useState(0);
-  const [cleared, setCleared] = useState(false);
   const [timerInterval, setTimerInterval] = useState(null);
 
   const startTimer = () => {
     if (timerInterval) clearInterval(timerInterval);
-    const interval = setInterval(() => {
-      setTimeTaken((prevTime) => prevTime + 1);
-    }, 1000);
+    const interval = setInterval(() => {}, 1000); // Timer logic can be added back if needed
     setTimerInterval(interval);
   };
 
@@ -83,32 +77,12 @@ const Login = () => {
       setUser(currentUser);
 
       if (currentUser) {
-        const state = await loadGameState(currentUser.uid);
-        if (state) {
-          setLevel(state.level);
-          setTimeTaken(state.timeTaken || 0);
-          setCleared(state.cleared || false);
-        } else {
-          setLevel(1);
-          setTimeTaken(0);
-          setCleared(false);
-        }
         fetchUserFiles(currentUser.uid);
         startTimer();
-      } else {
-        setLevel(1);
-        setTimeTaken(0);
-        setCleared(false);
       }
     });
     return () => unsubscribe();
   }, []);
-
-  useEffect(() => {
-    if (user) {
-      saveGameState(user.uid, level, timeTaken, cleared);
-    }
-  }, [cleared, level, timeTaken, user]);
 
   const handleFileChange = (fileItems) => {
     setFile(fileItems[0]?.file);
@@ -142,7 +116,6 @@ const Login = () => {
       setUploadedFiles(updatedFiles);
 
       // Navigate to title screen
-      // navigate("/title-screen");
       setOpen(true);
       setStartGame(true);
     } catch (error) {
@@ -161,11 +134,6 @@ const Login = () => {
     }
   };
 
-  const handleClearRoom = () => {
-    setCleared(true);
-    stopTimer();
-  };
-
   const handleLogout = () => {
     stopTimer();
     logout();
@@ -180,7 +148,6 @@ const Login = () => {
       }}
       className="h-screen flex w-screen items-center justify-center bg-gradient-to-r from-gray-600 to-gray-900"
     >
-      {/* <div style={{ backgroundImage: `url(${background1})` }}></div> */}
       <div
         style={glassStyle}
         className="flex relative flex-row space-x-3 w-7/8 bg-gray-900 bg-opacity-50 rounded-2xl shadow-lg h-4/5"
@@ -204,19 +171,12 @@ const Login = () => {
                   <h2 className="text-white text-5xl font-bold mb-4 font-mono">
                     Welcome, {user.displayName}
                   </h2>
-
-                  {/* <img
-                  src={user.photoURL}
-                  alt="User"
-                  className="w-20 h-20 rounded-full mx-auto mb-4"
-                /> */}
                   <p className="mt-4 text-[#D7AC68] font-mono">
                     Please upload the balance sheet, shareholder equity
                     statement, and cashflow statement.
                   </p>
                   <div className="items-center justify-center mx-auto">
                     <FilePond
-                      className={"background-color: rgba(0, 0, 0, 0.8)"}
                       files={file ? [file] : []}
                       allowMultiple={false}
                       onupdatefiles={handleFileChange}
@@ -245,12 +205,6 @@ const Login = () => {
                         Start
                       </motion.button>
                     )}
-                    {/* <button
-                    onClick={() => handleDelete(file.name)}
-                    className="w-full mt-2 py-2 bg-red-500 hover:bg-red-400 rounded-md text-white font-bold"
-                  >
-                    Delete
-                  </button> */}
                   </div>
                 </div>
               </div>
