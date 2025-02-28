@@ -84,6 +84,7 @@ export default function EscapeRoom2() {
     if (user) {
       const db = getFirestore();
       const userRef = doc(db, "times", "level2", "users", user.uid);
+      const clearedLevelsRef = doc(db, "users", user.uid);
 
       try {
         // Get the current best time
@@ -106,6 +107,19 @@ export default function EscapeRoom2() {
           time: timeTaken, // Store current time
           bestTime: newBestTime, // Update best time if necessary
         });
+
+        const clearedLevelsDoc = await getDoc(clearedLevelsRef);
+        const clearedLevels = clearedLevelsDoc.exists()
+          ? clearedLevelsDoc.data().clearedLevels || []
+          : []; // If no data, start with an empty array
+
+        // Check if the level is already in the cleared levels
+        if (!clearedLevels.includes("level2")) {
+          clearedLevels.push("level2"); // Add the current level to the cleared levels
+          await setDoc(clearedLevelsRef, {
+            clearedLevels, // Update the cleared levels list
+          }, { merge: true }); // Merge so we don't overwrite other data
+        }
 
         // Navigate to leaderboard and pass the data (current time and best time)
         navigate("/leaderboard2", {
