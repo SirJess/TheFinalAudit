@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const BalanceSheetQuiz = () => {
+const BalanceSheetQuiz = ({ onQuizComplete }) => {
   const [answers, setAnswers] = useState({
     cash2024: "",
     receivables2023: "",
@@ -12,8 +11,6 @@ const BalanceSheetQuiz = () => {
     totalEquity2023: "",
     totalLiabilities2024: "",
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,7 +40,9 @@ const BalanceSheetQuiz = () => {
     }
 
     // If all answers are correct, navigate to a different page
-    navigate("/leaderboard1");
+    if (onQuizComplete) {
+      onQuizComplete();
+    }
   };
 
   return (
