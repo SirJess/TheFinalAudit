@@ -3,7 +3,7 @@ from google.genai import types
 import base64
 import json
 from collections import Counter
-from OCR_processing import process_pdf_with_ocr
+from OCR_Processing import process_pdf_with_ocr
 
 def generate(bucket_name, object_path):
     client = genai.Client(
