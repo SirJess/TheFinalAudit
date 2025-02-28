@@ -3,54 +3,102 @@ import sheet1 from "../../assets/sheet1.png";
 import sheet2 from "../../assets/sheet2.png";
 import sheet3 from "../../assets/sheet3.png";
 import learnBalanceSheet from "../../assets/learnBalanceSheet.png";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
-import BalanceSheetQuiz from "../missingBalanceSheet/BalanceSheetQuiz";
 import { useNavigate } from "react-router-dom";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import BalanceSheetQuiz from "../missingBalanceSheet/BalanceSheetQuiz";
 
-function useAuth() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function EscapeRoom1() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null); // Track the user
+  const [timeTaken, setTimeTaken] = useState(0);
+  const [timerInterval, setTimerInterval] = useState(null);
+  const [cleared, setCleared] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const balanceSheetQuizRef = useRef(null);
 
+  // Firebase Auth listener
   useEffect(() => {
     const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // Set user when authenticated
+      } else {
+        setUser(null); // Clear user when not authenticated
+      }
     });
 
-    return () => unsubscribe(); // Clean up the listener on unmount
+    return () => unsubscribe(); // Clean up listener on unmount
   }, []);
-  console.log(user);
-  return { user, loading };
-}
 
-export default function EscapeRoom() {
-  const [selectedItem, setSelectedItem] = useState(null);
-  const { user, loading } = useAuth();
-  const navigate = useNavigate();
+  // Timer Functions
+  const startTimer = () => {
+    if (timerInterval) clearInterval(timerInterval);
+    const interval = setInterval(() => {
+      setTimeTaken((prevTime) => prevTime + 1);
+    }, 1000);
+    setTimerInterval(interval);
+  };
 
-  // const handleProcessPdf = async () => {
-  //   const bucket_name = "nth-segment-450320-i5.firebasestorage.app";
-  //   const object_path =
-  //     "users/" + user.uid + "/files/" + "UGA_annual_report.pdf";
-  //   try {
-  //     const response = await fetch("http://localhost:5000/process-pdf", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ bucket: bucket_name, object_path: object_path }),
-  //     });
-  //     const result = await response.text();
-  //     console.log("Processed PDF text file path:", result);
-  //   } catch (error) {
-  //     console.error("Error processing PDF:", error);
-  //   }
-  // };
+  const stopTimer = () => {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      setTimerInterval(null);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      startTimer();
+    }
+    return () => stopTimer();
+  }, [user]);
+
+  const handleClearRoom = async () => {
+    setCleared(true);
+    stopTimer();
+
+    if (user) {
+      const db = getFirestore();
+      const userRef = doc(db, "times", "level1", "users", user.uid);
+
+      try {
+        // Get the current best time
+        const userDoc = await getDoc(userRef);
+        const existingBestTime = userDoc.exists() ? userDoc.data().bestTime : null;
+
+        let newBestTime;
+        // If the new time is better OR if there's no existing best time, update Firestore
+        if (existingBestTime == null || timeTaken < existingBestTime) {
+          newBestTime = timeTaken; // Set the new best time
+        } else {
+          newBestTime = existingBestTime; // Keep the old best time
+        }
+
+        // Store the current time and best time in Firestore
+        await setDoc(userRef, {
+          username: user.email,
+          time: timeTaken, // Store current time
+          bestTime: newBestTime, // Update best time if necessary
+        });
+
+        // Navigate to leaderboard and pass the data (current time and best time)
+        navigate("/leaderboard1", {
+          state: {
+            timeTaken: timeTaken,
+            bestTime: newBestTime, // Use the correct best time here
+            email: user.email,
+          },
+        });
+
+      } catch (error) {
+        console.error("Error saving completion time:", error);
+      }
+    }
+  };
 
   const hotspots = [
     {
@@ -140,7 +188,7 @@ export default function EscapeRoom() {
           <Dialog.Content className="fixed inset-0 flex justify-center items-center p-4 z-30">
             <div className="bg-white p-4 rounded-lg">
               {selectedItem.id === "enter_balance_sheet" ? (
-                <BalanceSheetQuiz />
+                <BalanceSheetQuiz onQuizComplete={handleClearRoom} />
               ) : (
                 <img src={selectedItem.image} alt="Popup" className="w-full" />
               )}
