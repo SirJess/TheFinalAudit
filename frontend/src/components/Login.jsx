@@ -24,6 +24,7 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import SuccessDialog from "./Dialogs/SuccessDialog";
+import { motion } from "framer-motion";
 
 // Register the plugins
 registerPlugin(
@@ -229,12 +230,20 @@ const Login = () => {
                       Upload File
                     </button>
                     {startGame && (
-                      <button
-                        onClick={() => navigate("/title-screen")}
-                        className="absolute bottom-4 right-4 py-2 px-4 duration-200 ease-in bg-yellow-500 hover:bg-[#AA8954] hover:cursor-pointer rounded-md text-[#422419] font-bold"
+                      // <button
+                      //   onClick={() => navigate("/intro1")}
+                      //   className="absolute bottom-4 right-4 py-2 px-4 duration-200 ease-in bg-yellow-500 hover:bg-[#AA8954] hover:cursor-pointer rounded-md text-[#422419] font-bold"
+                      // >
+                      //   Start Game
+                      // </button>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => navigate("/intro1")}
+                        className="absolute bottom-4 right-4 py-2 px-4 ease-in bg-yellow-500 hover:cursor-pointer rounded-md text-[#422419] font-bold"
                       >
-                        Start Game
-                      </button>
+                        Start
+                      </motion.button>
                     )}
                     {/* <button
                     onClick={() => handleDelete(file.name)}
