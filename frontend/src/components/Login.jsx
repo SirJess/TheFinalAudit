@@ -6,6 +6,7 @@ import {
   storage,
   uploadFile,
   deleteFile,
+  fetchUserFiles,
 } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
@@ -15,11 +16,29 @@ import loginpageBackground from "../assets/loginpageBackground.png";
 import { useNavigate } from "react-router-dom";
 import brickBackground from "../assets/brickBackground.png";
 
+// Import FilePond and plugins
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import FilePondPluginFileEncode from "filepond-plugin-file-encode";
+import SuccessDialog from "./Dialogs/SuccessDialog";
+
+// Register the plugins
+registerPlugin(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview,
+  FilePondPluginFileEncode
+);
+
 const Login = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
   const [file, setFile] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [startGame, setStartGame] = useState(false);
   const glassStyle = {
     backgroundColor: "rgba(0, 0, 0, 0.8)", // Increased transparency
     backgroundImage:
@@ -31,6 +50,7 @@ const Login = () => {
     border: "1px solid rgba(144, 144, 144, 0.49)",
   };
   const [uploadedFiles, setUploadedFiles] = useState([]);
+
   const [fileUrl, setFileUrl] = useState("");
 
   const [username, setUsername] = useState("");
@@ -89,44 +109,53 @@ const Login = () => {
     }
   }, [cleared, level, timeTaken, user]);
 
-  const fetchUserFiles = (userId) => {
-    const storageRef = ref(storage, `users/${userId}/files/`);
-    listAll(storageRef)
-      .then((res) => {
-        const filesPromises = res.items.map(async (item) => {
-          const url = await getDownloadURL(item);
-          return { name: item.name, url };
-        });
-        Promise.all(filesPromises).then((files) => setUploadedFiles(files));
-      })
-      .catch((error) => console.error("Error fetching files: ", error));
+  const handleFileChange = (fileItems) => {
+    setFile(fileItems[0]?.file);
   };
 
-  const handleFileChange = (event) => setFile(event.target.files[0]);
-
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!file) {
       alert("Please select a file first.");
       return;
     }
 
-    if (user) {
-      uploadFile(user.uid, file)
-        .then((downloadURL) => {
-          setFileUrl(downloadURL);
-          fetchUserFiles(user.uid);
-          navigate("/title-screen");
-        })
-        .catch((error) => {
-          console.error("Upload failed", error);
-        });
+    if (!user) return;
+
+    try {
+      // Fetch all uploaded files
+      const userFiles = await fetchUserFiles(user.uid);
+
+      if (userFiles.length > 0) {
+        // Delete all files
+        await Promise.all(
+          userFiles.map((file) => deleteFile(user.uid, file.name))
+        );
+      }
+
+      // Upload the new file
+      const downloadURL = await uploadFile(user.uid, file);
+      setFileUrl(downloadURL);
+
+      // Refresh uploaded files list
+      const updatedFiles = await fetchUserFiles(user.uid);
+      setUploadedFiles(updatedFiles);
+
+      // Navigate to title screen
+      // navigate("/title-screen");
+      setOpen(true);
+      setStartGame(true);
+    } catch (error) {
+      console.error("Error during upload process:", error);
     }
   };
 
   const handleDelete = (fileName) => {
     if (user) {
       deleteFile(user.uid, fileName)
-        .then(() => fetchUserFiles(user.uid))
+        .then(() => {
+          setFileUrl("");
+          fetchUserFiles(user.uid).then((files) => setUploadedFiles(files));
+        })
         .catch((error) => console.error("Error deleting file:", error));
     }
   };
@@ -153,7 +182,7 @@ const Login = () => {
       {/* <div style={{ backgroundImage: `url(${background1})` }}></div> */}
       <div
         style={glassStyle}
-        className="flex flex-row space-x-3 w-7/8 bg-gray-900 bg-opacity-50 rounded-2xl shadow-lg h-4/5"
+        className="flex relative flex-row space-x-3 w-7/8 bg-gray-900 bg-opacity-50 rounded-2xl shadow-lg h-4/5"
       >
         <div className="flex-1 p-2">
           <div
@@ -170,7 +199,7 @@ const Login = () => {
           {user ? (
             <div className="w-full h-full flex justify-center items-center">
               <div className="flex flex-col w-4/5">
-                <div className="text-center">
+                <div className="text-center space-y-10">
                   <h2 className="text-white text-5xl font-bold mb-4 font-mono">
                     Welcome, {user.displayName}
                   </h2>
@@ -180,23 +209,33 @@ const Login = () => {
                   alt="User"
                   className="w-20 h-20 rounded-full mx-auto mb-4"
                 /> */}
-                  <p>{user.email}</p>
                   <p className="mt-4 text-[#D7AC68] font-mono">
                     Please upload the balance sheet, shareholder equity
                     statement, and cashflow statement.
                   </p>
-                  <div className="w-4/5 items-center justify-center mx-auto">
-                    <input
-                      type="file"
-                      onChange={handleFileChange}
-                      className="w-full mt-4 text-gray-700 bg-white border border-gray-300 rounded-md focus:ring focus:ring-yellow-400"
+                  <div className="items-center justify-center mx-auto">
+                    <FilePond
+                      className={"background-color: rgba(0, 0, 0, 0.8)"}
+                      files={file ? [file] : []}
+                      allowMultiple={false}
+                      onupdatefiles={handleFileChange}
+                      acceptedFileTypes={["application/pdf"]}
+                      labelIdle='Drag & Drop your PDF or <span class="filepond--label-action">Browse</span>'
                     />
                     <button
                       onClick={handleUpload}
-                      className="w-full mt-4 py-2 duration-200 ease-in bg-[#D7AC68] hover:bg-[#AA8954] hover:cursor-pointer rounded-md text-[#42241980] font-bold"
+                      className="w-full mt-4 py-2 duration-200 ease-in bg-[#D7AC68] hover:bg-[#AA8954] hover:cursor-pointer rounded-md text-[#422419] font-bold"
                     >
                       Upload File
                     </button>
+                    {startGame && (
+                      <button
+                        onClick={() => navigate("/title-screen")}
+                        className="absolute bottom-4 right-4 py-2 px-4 duration-200 ease-in bg-yellow-500 hover:bg-[#AA8954] hover:cursor-pointer rounded-md text-[#422419] font-bold"
+                      >
+                        Start Game
+                      </button>
+                    )}
                     {/* <button
                     onClick={() => handleDelete(file.name)}
                     className="w-full mt-2 py-2 bg-red-500 hover:bg-red-400 rounded-md text-white font-bold"
@@ -204,34 +243,13 @@ const Login = () => {
                     Delete
                   </button> */}
                   </div>
-                  {uploadedFiles.length > 0 && (
-                    <div className="mt-6">
-                      <h3 className="text-xl font-semibold">
-                        Your uploaded files:
-                      </h3>
-                      {uploadedFiles.map((file, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center justify-between mt-2"
-                        >
-                          <a
-                            href={file.url}
-                            className="text-yellow-400 hover:underline"
-                          >
-                            {file.name}
-                          </a>
-                          <button
-                            onClick={handleLogout}
-                            className="bg-red-500 hover:bg-red-400 text-white px-2 py-1 rounded-md"
-                          >
-                            Logout
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
               </div>
+              <SuccessDialog
+                open={open}
+                onClose={() => setOpen(false)}
+                message="Your operation was successful!"
+              />
             </div>
           ) : (
             <div className="w-full h-full flex justify-center items-center">
