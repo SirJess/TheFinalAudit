@@ -1,15 +1,15 @@
-import sys
 from google.cloud import vision
 from google.cloud import storage
 from google.oauth2 import service_account
 import json
+import os
 
 def process_pdf_with_ocr(bucket_name, object_path):
     """
     Processes a PDF stored in Google Cloud Storage with Google Cloud Vision OCR and saves the extracted text.
     """
     # Path to your service account JSON credentials file
-    SERVICE_ACCOUNT_FILE = 'nth-segment-450320-i5-4f36f7865449.json'  # Update with your GCP credentials
+    SERVICE_ACCOUNT_FILE = 'backend/Models/nth-segment-450320-i5-9fe1cb58ca3f.json'  # Update with your GCP credentials
     
     # Load credentials
     credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE)
@@ -55,20 +55,18 @@ def process_pdf_with_ocr(bucket_name, object_path):
                     for response in data.get("responses", [])
                     if "fullTextAnnotation" in response
                 )
+            os.remove("temp_result.json")  # Clean up the temporary file
 
     # Save extracted text to a local file
-    output_txt_path = f"{object_path.split('/')[-1].replace('.pdf', '_processed.txt')}"
-    with open(output_txt_path, "w", encoding="utf-8") as f:
-        f.write(extracted_text)
+    # output_txt_path = f"{object_path.split('/')[-1].replace('.pdf', '_processed.txt')}"
+    # with open(output_txt_path, "w", encoding="utf-8") as f:
+    #     f.write(extracted_text)
     
-    print(f"OCR text saved to {output_txt_path}")
-    return output_txt_path
+    # print(f"OCR text saved")
+    return extracted_text
 
-if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python google_cloud_vision_v2.py <bucket_name> <object_path>")
-        sys.exit(1)
-    
-    bucket_name = sys.argv[1]
-    object_path = sys.argv[2]
-    process_pdf_with_ocr(bucket_name, object_path)
+# # Example Usage
+# bucket_name = "nth-segment-450320-i5.firebasestorage.app"
+# object_path = "users/qt1gelPXt3WoI3gTLCbsb1S7yM33/files/walmart_2024_annual_report.pdf"
+
+# print(process_pdf_with_ocr(bucket_name, object_path))
