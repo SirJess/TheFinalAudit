@@ -11,7 +11,7 @@ const Leaderboard = () => {
 
   // Sample leaderboard data
   const [leaderboard, setLeaderboard] = useState([
-    { name: "deca", score: 22 },
+    { name: "deca", score: 75 },
     { name: "bani", score: 602 },
     { name: "eric", score: 701 },
     { name: "jieq", score: 912 },
