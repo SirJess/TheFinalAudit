@@ -6,7 +6,7 @@ const TitleScreen = () => {
   const navigate = useNavigate();
 
   const handleStartGame = () => {
-    navigate("/intro1");
+    navigate("/login");
   };
   return (
     <div
