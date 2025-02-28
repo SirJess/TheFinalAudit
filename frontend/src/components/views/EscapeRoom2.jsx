@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom"; // Fix missing import
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
 function useAuth() {
   const [user, setUser] = useState(null);
@@ -76,18 +77,50 @@ export default function EscapeRoom2() {
     }
   };
 
-  const handleClearRoom = () => {
+  const handleClearRoom = async () => {
     setCleared(true);
     stopTimer();
+  
     if (user) {
-      navigate("/leaderboard2", {
-        state: {
-          timeTaken: timeTaken,
-          email: user.email,
-        },
-      });
+      const db = getFirestore();
+      const userRef = doc(db, "times", "level2", "users", user.uid);
+  
+      try {
+        // Get the current best time
+        const userDoc = await getDoc(userRef);
+        const existingBestTime = userDoc.exists() ? userDoc.data().bestTime : null;
+      
+        let newBestTime;
+        // If the new time is better OR if there's no existing best time, update Firestore
+        if (existingBestTime == null || timeTaken < existingBestTime) {
+          newBestTime = timeTaken; // Set the new best time
+        } else {
+          newBestTime = existingBestTime; // Keep the old best time
+        }
+      
+        // Store the current time and best time in Firestore
+        await setDoc(userRef, {
+          username: user.email,
+          time: timeTaken, // Store current time
+          bestTime: newBestTime, // Update best time if necessary
+        });
+      
+        // Navigate to leaderboard and pass the data (current time and best time)
+        navigate("/leaderboard2", {
+          state: {
+            timeTaken: timeTaken,
+            bestTime: newBestTime, // Use the correct best time here
+            email: user.email,
+          },
+        });
+      
+      } catch (error) {
+        console.error("Error saving completion time:", error);
+      }
+      
     }
   };
+  
 
   const hotspots = [
     {
