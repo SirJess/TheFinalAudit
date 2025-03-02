@@ -101,7 +101,7 @@ const AllLevels = () => {
 
                 {/* If the level is locked, show the lock icon */}
                 {!clearedLevels.includes(`level${level.level - 1}`) && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-20 bg-gray-500 opacity-50 pointer-events-none bg-gray-500 opacity-50 pointer-events-none">
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-20 pointer-events-none">
                     <FaLock className="text-3xl text-white" />
                   </div>
                 )}
