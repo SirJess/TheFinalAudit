@@ -9,6 +9,11 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom"; // Fix missing import
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import boxHint from "../../assets/level2/boxHint.png";
+import computerQ from "../../assets/level2/computerQ.png";
+import keyboardHint from "../../assets/level2/keyboardHint.png";
+import level2Background from "../../assets/level2/level2Background.png";
+import paperHint from "../../assets/level2/paperHint.png";
 
 function useAuth() {
   const [user, setUser] = useState(null);
@@ -121,9 +126,13 @@ export default function EscapeRoom2() {
         // Check if the level is already in the cleared levels
         if (!clearedLevels.includes("level2")) {
           clearedLevels.push("level2"); // Add the current level to the cleared levels
-          await setDoc(clearedLevelsRef, {
-            clearedLevels, // Update the cleared levels list
-          }, { merge: true }); // Merge so we don't overwrite other data
+          await setDoc(
+            clearedLevelsRef,
+            {
+              clearedLevels, // Update the cleared levels list
+            },
+            { merge: true }
+          ); // Merge so we don't overwrite other data
         }
 
 
@@ -146,54 +155,55 @@ export default function EscapeRoom2() {
   const hotspots = [
     {
       id: "explain_EBITDA",
-      x: "370px",
-      y: "180px",
-      width: "90px",
-      height: "140px",
+      x: "24vw",
+      y: "28vh",
+      width: "170px",
+      height: "250px",
       image: what_is_ebitda,
+      imageClickable: computerQ,
       borderRadius: "0px",
-      boxShadow: "0px 0px 10px 4px rgba(255, 255, 0, 0.6)",
-      imagewidth: "w-[450px]",
+      filter: "drop-shadow(0px 0px 20px rgba(255, 255, 0, 0.8))",
     },
     {
       id: "enter_EBITDA",
-      x: "570px",
-      y: "250px",
-      width: "200px",
-      height: "150px",
+      x: "48vw",
+      y: "28vh",
+      width: "90px",
+      height: "90px",
       image: levels_image,
+      imageClickable: boxHint,
       borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 0, 0, 0.6)",
-      imagewidth: "100px",
+      filter: "drop-shadow(0px 0px 20px rgba(255, 255, 0, 0.8))",
     },
     {
       id: "depreciation_amortization",
-      x: "940px",
-      y: "270px",
-      width: "180px",
-      height: "160px",
+      x: "68vw",
+      y: "58vh",
+      width: "60px",
+      height: "60px",
       image: levels_image,
       borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+      imageClickable: paperHint,
+      filter: "drop-shadow(0px 0px 20px rgba(255, 255, 0, 0.8))",
       imagewidth: "100px",
     },
     {
       id: "lost_your_data",
-      x: "1145px",
-      y: "545px",
-      width: "75px",
-      height: "40px",
+      x: "30vw",
+      y: "53vh",
+      width: "150px",
+      height: "60px",
       image: Horizontal_Analysis,
+      imageClickable: keyboardHint,
       borderRadius: "0px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
-      imagewidth: "100px",
+      filter: "drop-shadow(0px 0px 20px rgba(255, 255, 0, 0.8))",
     },
   ];
 
   return (
     <div className="relative w-full h-screen bg-black">
       <img
-        src={escapeRoom2}
+        src={level2Background}
         alt="Escape Room"
         className="w-full h-full object-cover"
       />
@@ -209,6 +219,10 @@ export default function EscapeRoom2() {
             height: spot.height,
             boxShadow: spot.boxShadow,
             borderRadius: spot.borderRadius,
+            backgroundImage: `url(${spot.imageClickable})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            filter: spot.filter ? spot.filter : "none",
           }}
           whileHover={{ scale: 1.1 }}
           onClick={() => {
