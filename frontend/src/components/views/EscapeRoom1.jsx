@@ -10,6 +10,10 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import BalanceSheetQuiz from "../missingBalanceSheet/BalanceSheetQuiz";
+import TutorialOverlay from "../TutorialOverlay";
+import ShowItem from "../Dialogs/ShowItem";
+import informationIcon from "../../assets/informationIcon.png";
+import settingIcon from "../../assets/settingIcon.png";
 
 export default function EscapeRoom1() {
   const navigate = useNavigate();
@@ -19,6 +23,7 @@ export default function EscapeRoom1() {
   const [cleared, setCleared] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const balanceSheetQuizRef = useRef(null);
+  const [showTutorial, setShowTutorial] = useState(true);
 
   // Firebase Auth listener
   useEffect(() => {
@@ -96,9 +101,13 @@ export default function EscapeRoom1() {
         // Check if the level is already in the cleared levels
         if (!clearedLevels.includes("level1")) {
           clearedLevels.push("level1"); // Add the current level to the cleared levels
-          await setDoc(clearedLevelsRef, {
-            clearedLevels, // Update the cleared levels list
-          }, { merge: true }); // Merge so we don't overwrite other data
+          await setDoc(
+            clearedLevelsRef,
+            {
+              clearedLevels, // Update the cleared levels list
+            },
+            { merge: true }
+          ); // Merge so we don't overwrite other data
         }
 
         // Navigate to leaderboard and pass the data (current time and best time)
@@ -170,6 +179,9 @@ export default function EscapeRoom1() {
 
   return (
     <div className="relative w-full h-screen bg-black">
+      {showTutorial && (
+        <TutorialOverlay onFinish={() => setShowTutorial(false)} />
+      )}
       {/* Background Image */}
       <img
         src={escapeRoom1}
@@ -218,6 +230,12 @@ export default function EscapeRoom1() {
           </Dialog.Content>
         </Dialog.Root>
       )}
+      <div className="absolute top-4 left-4 z-50">
+        <ShowItem imageSrc={informationIcon} itemComponent={TutorialOverlay} />
+      </div>
+      <div className="absolute top-4 left-16 z-50">
+        <ShowItem imageSrc={settingIcon} itemComponent={TutorialOverlay} />
+      </div>
     </div>
-  );
+  );git sta
 }
