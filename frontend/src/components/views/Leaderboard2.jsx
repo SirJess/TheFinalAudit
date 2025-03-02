@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+
 import {
   getFirestore,
   collection,
@@ -61,13 +62,12 @@ const Leaderboard = () => {
           backgroundPosition: "center",
         }}
       >
-        <h1 className="text-gray-800 text-4xl text-center font-bold">
-          Leaderboard
-        </h1>
+        <h1 className="text-gray-800 text-4xl text-center font-bold">Leaderboard</h1>
 
         {timeTaken && email && (
           <div className="mb-4 text-center text-gray-900">
             <p className="text-xl font-semibold">Your Time: {timeTaken} sec</p>
+
             <p className="text-xl font-semibold">
               Your Best Time: {bestTime} sec
             </p>
