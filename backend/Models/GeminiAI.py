@@ -5,7 +5,10 @@ import json
 from collections import Counter
 from OCR_Processing import process_pdf_with_ocr
 
+generated_dict = {}
+
 def generate(bucket_name, object_path):
+    global generated_dict
     client = genai.Client(
         vertexai=True,
         project="nth-segment-450320-i5",
@@ -15,7 +18,7 @@ def generate(bucket_name, object_path):
     # Get the balance sheet data from OCR processing
     balance_sheet_data = process_pdf_with_ocr(bucket_name, object_path)
 
-    text1 = types.Part.from_text(text=f"""Convert this to JSON format:{balance_sheet_data}""")
+    text1 = types.Part.from_text(text=f"""Convert this to Dictionary inside Dictionary format:{balance_sheet_data}. Give me only the dictionary""")
 
     model = "gemini-2.0-flash-001"
     contents = [
@@ -44,7 +47,7 @@ def generate(bucket_name, object_path):
             category="HARM_CATEGORY_HARASSMENT",
             threshold="OFF"
         )],
-        system_instruction=[types.Part.from_text(text="""You are Accountant and you want to make a data structure of the file, perhaps in dictionary of balance sheet for the client""")],
+        system_instruction=[types.Part.from_text(text="""You are Accountant and you want to make a data structure of the file, perhaps in dictionary of balance sheet for the client, You only give the dictionary nothing else no text""")],
     )
 
     generated_text = ""
@@ -54,14 +57,11 @@ def generate(bucket_name, object_path):
         config=generate_content_config,
     ):
         generated_text += chunk.text
-        # print(chunk.text, end="")
-
-    # Count words
-    # word_counts = Counter(generated_text.split())
 
     return generated_text
 
+
 # Example Usage
-bucket_name = "nth-segment-450320-i5.firebasestorage.app"
-object_path = "users/qt1gelPXt3WoI3gTLCbsb1S7yM33/files/walmart_2024_annual_report.pdf"
-print(generate(bucket_name, object_path))
+# bucket_name = "nth-segment-450320-i5.firebasestorage.app"
+# object_path = "users/qt1gelPXt3WoI3gTLCbsb1S7yM33/files/walmart_2024_annual_report.pdf"
+# print(generate(bucket_name, object_path))
