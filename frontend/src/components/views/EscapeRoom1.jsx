@@ -1,4 +1,9 @@
-import escapeRoom1 from "../../assets/escapeRoom1.jpg";
+import level1Background from "../../assets/level1/level1Background.png";
+import computerQ from "../../assets/level1/computerQ.png";
+import paper1Hint from "../../assets/level1/paper1Hint.png";
+import paper2hint from "../../assets/level1/paper2hint.png";
+import paper3hint from "../../assets/level1/paper3hint.png";
+import posterhint from "../../assets/level1/posterhint.png";
 import sheet1 from "../../assets/sheet1.png";
 import sheet2 from "../../assets/sheet2.png";
 import sheet3 from "../../assets/sheet3.png";
@@ -127,53 +132,57 @@ export default function EscapeRoom1() {
   const hotspots = [
     {
       id: "poster",
-      x: "748px",
-      y: "368px",
+      x: "44vw",
+      y: "40vh",
       width: "66px",
       height: "92px",
       image: learnBalanceSheet,
+      imageClickable: posterhint,
       borderRadius: "0px",
       boxShadow: "0px 0px 10px 4px rgba(255, 255, 0, 0.6)",
     },
     {
       id: "assets",
-      x: "825px",
-      y: "785px",
+      x: "68vw",
+      y: "89vh",
       width: "78px",
       height: "33px",
       image: sheet1,
-      borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+      imageClickable: paper1Hint,
+      borderRadius: "",
+      filter: "drop-shadow(0px 0px 15px rgba(255, 255, 0, 0.8))",
     },
     {
       id: "liability",
-      x: "298px",
+      x: "30vw",
       y: "825px",
-      width: "60px",
+      width: "90px",
       height: "33px",
       image: sheet2,
-      borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+      imageClickable: paper3hint,
+      filter: "drop-shadow(0px 0px 20px rgba(255, 255, 0, 0.8))",
     },
     {
       id: "enter_balance_sheet",
-      x: "445px",
-      y: "500px",
-      width: "111px",
-      height: "80px",
+      x: "32.2vw",
+      y: "55.3vh",
+      width: "146px",
+      height: "109px",
       image: "",
+      imageClickable: computerQ,
       borderRadius: "0px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+      filter: "drop-shadow(0px 0px 15px rgba(255, 255, 0, 0.8))",
     },
     {
       id: "profit",
-      x: "1454px",
-      y: "610px",
+      x: "84vw",
+      y: "66vh",
       width: "70px",
       height: "19px",
       image: sheet3,
+      imageClickable: paper2hint,
       borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+      filter: "drop-shadow(0px 0px 15px rgba(255, 255, 0, 0.8))",
     },
   ];
 
@@ -184,7 +193,7 @@ export default function EscapeRoom1() {
       )}
       {/* Background Image */}
       <img
-        src={escapeRoom1}
+        src={level1Background}
         alt="Escape Room"
         className="w-full h-full object-cover z-0"
       />
@@ -193,7 +202,7 @@ export default function EscapeRoom1() {
       {hotspots.map((spot) => (
         <motion.div
           key={spot.id}
-          className="absolute bg-transparent cursor-pointer z-10" // Set z-index to ensure it's above the background
+          className="absolute cursor-pointer z-10" // Set z-index to ensure it's above the background
           style={{
             left: spot.x,
             top: spot.y,
@@ -201,6 +210,10 @@ export default function EscapeRoom1() {
             height: spot.height,
             boxShadow: spot.boxShadow,
             borderRadius: spot.borderRadius,
+            backgroundImage: `url(${spot.imageClickable})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            filter: spot.filter ? spot.filter : "none",
           }}
           whileHover={{ scale: 1.1 }}
           onClick={() => setSelectedItem(spot)}
