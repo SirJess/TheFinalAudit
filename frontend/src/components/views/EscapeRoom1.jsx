@@ -237,5 +237,5 @@ export default function EscapeRoom1() {
         <ShowItem imageSrc={settingIcon} itemComponent={TutorialOverlay} />
       </div>
     </div>
-  );git sta
+  );
 }

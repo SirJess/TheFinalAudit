@@ -1,13 +1,56 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import escapeRoom1 from "../../assets/escapeRoom1.jpg";
+import React, { useEffect } from "react";
+import { getAuth } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 export default function Intro1() {
   const navigate = useNavigate(); // Initialize navigate function
+  const user = getAuth().currentUser;
+
+  useEffect(() => {
+    
+    const fetchLevel0 = async () => {
+      if (user) {
+        const db = getFirestore();
+        const userRef = doc(db, "times", "level0", "users", user.uid);
+        const clearedLevelsRef = doc(db, "users", user.uid);
+    
+        try {
+          // Get the current best time
+          const userDoc = await getDoc(userRef);
+          console.log("adding level0");
+        
+          const clearedLevelsDoc = await getDoc(clearedLevelsRef);
+          const clearedLevels = clearedLevelsDoc.exists()
+            ? clearedLevelsDoc.data().clearedLevels || []
+            : []; // If no data, start with an empty array
+    
+          // Check if the level is already in the cleared levels
+          if (!clearedLevels.includes("level0")) {
+            clearedLevels.push("level0"); // Add the current level to the cleared levels
+            await setDoc(
+              clearedLevelsRef,
+              {
+                clearedLevels, // Update the cleared levels list
+              },
+              { merge: true }
+            ); // Merge so we don't overwrite other data
+            }
+          } catch (error) {
+            console.error("Error adding level 0:", error);
+          }
+      }
+    };
+    fetchLevel0()
+  }, [user]);
 
   const handleNavigation = () => {
     navigate("/levels"); // Replace with the correct route path
   };
+
+  
 
   return (
     <div
