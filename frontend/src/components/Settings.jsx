@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 
 const Settings = ({ musicRef, volume, setVolume, openSettings }) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(true);
   const navigate = useNavigate();
+  const auth = getAuth();
 
   // Handle volume change
   const handleVolumeChange = (e) => {
@@ -13,6 +15,15 @@ const Settings = ({ musicRef, volume, setVolume, openSettings }) => {
 
   const handleNavigationLevels = () => {
     navigate("/levels");
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Log out the user
+      navigate("/"); // Navigate to the login page (or any other page)
+    } catch (error) {
+      console.error("Error logging out: ", error);
+    }
   };
 
   return (
@@ -36,13 +47,23 @@ const Settings = ({ musicRef, volume, setVolume, openSettings }) => {
         </div>
       )}
 
-      {/* Navigate Buttons */}
+      {/* All Levels Button */}
       <div className="mt-4">
         <button
           onClick={handleNavigationLevels}
           className="mb-2 px-4 py-2 cursor-pointer bg-blue-500 text-white rounded"
         >
           All Levels
+        </button>
+      </div>
+
+      {/* Logout Button */}
+      <div className="mt-4">
+        <button
+          onClick={handleLogout}
+          className="mb-2 px-4 py-2 cursor-pointer bg-blue-500 text-white rounded"
+        >
+          Logout
         </button>
       </div>
     </div>

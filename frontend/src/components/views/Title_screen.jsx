@@ -18,7 +18,7 @@ const TitleScreen = () => {
         backgroundImage: `url(${title_screen})`,
       }}
     >
-      <h1 className="text-red-300 pt-[60px] text-9xl text-center font-bold font-[Creepster]">
+      <h1 className="text-[#45ba60] pt-[60px] text-9xl text-center font-bold font-[Creepster]">
         The Final Audit
       </h1>
       <h3 className="text-white absolute right-[220px] top-[150px] text-xl font-bold -rotate-12 animate-pulse-scale">
