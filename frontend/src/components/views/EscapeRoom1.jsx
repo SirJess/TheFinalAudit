@@ -19,6 +19,9 @@ import TutorialOverlay from "../TutorialOverlay";
 import ShowItem from "../Dialogs/ShowItem";
 import informationIcon from "../../assets/informationIcon.png";
 import settingIcon from "../../assets/settingIcon.png";
+import Settings from "../Settings";
+import BackgroundMusic from "../BackgroundMusic";
+import bgMusic from "../../assets/audio/test.mp3";
 
 export default function EscapeRoom1() {
   const navigate = useNavigate();
@@ -29,6 +32,9 @@ export default function EscapeRoom1() {
   const [selectedItem, setSelectedItem] = useState(null);
   const balanceSheetQuizRef = useRef(null);
   const [showTutorial, setShowTutorial] = useState(true);
+
+  const musicRef = useRef(null);
+  const [volume, setVolume] = useState(0.2);
 
   // Firebase Auth listener
   useEffect(() => {
@@ -188,6 +194,9 @@ export default function EscapeRoom1() {
 
   return (
     <div className="relative w-full h-screen bg-black">
+      <BackgroundMusic audioFile={bgMusic} volume={volume} ref={musicRef} />
+      {/* <Settings musicRef={musicRef} volume={volume} setVolume={setVolume} /> */}
+
       {showTutorial && (
         <TutorialOverlay onFinish={() => setShowTutorial(false)} />
       )}
@@ -247,7 +256,17 @@ export default function EscapeRoom1() {
         <ShowItem imageSrc={informationIcon} itemComponent={TutorialOverlay} />
       </div>
       <div className="absolute top-4 left-16 z-50">
-        <ShowItem imageSrc={settingIcon} itemComponent={TutorialOverlay} />
+        <ShowItem
+          imageSrc={settingIcon}
+          itemComponent={(props) => (
+            <Settings
+              {...props}
+              musicRef={musicRef}
+              volume={volume}
+              setVolume={setVolume}
+            />
+          )}
+        />
       </div>
     </div>
   );

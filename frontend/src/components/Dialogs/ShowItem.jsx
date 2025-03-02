@@ -5,6 +5,7 @@ const ShowItem = ({ imageSrc, itemComponent: ItemComponent, onFinish }) => {
 
   const handleClick = () => {
     setShowItem(!showItem);
+    if (showItem && onFinish) onFinish();
   };
 
   return (
@@ -22,6 +23,7 @@ const ShowItem = ({ imageSrc, itemComponent: ItemComponent, onFinish }) => {
               setShowItem(false);
               if (onFinish) onFinish();
             }}
+            handleClick={handleClick} // Pass handleClick to the ItemComponent
           />
         </div>
       )}
