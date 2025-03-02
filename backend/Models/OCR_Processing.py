@@ -9,7 +9,7 @@ def process_pdf_with_ocr(bucket_name, object_path):
     Processes a PDF stored in Google Cloud Storage with Google Cloud Vision OCR and saves the extracted text.
     """
     # Path to your service account JSON credentials file
-    SERVICE_ACCOUNT_FILE = 'backend/Models/nth-segment-450320-i5-9fe1cb58ca3f.json'  # Update with your GCP credentials
+    SERVICE_ACCOUNT_FILE = '/Users/sprihanjay/Programming/Projects/TheFinalAuditV2/TheFinalAudit/backend/Models/nth-segment-450320-i5-9fe1cb58ca3f.json'  # Update with your GCP credentials
     
     # Load credentials
     credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE)

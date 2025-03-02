@@ -6,13 +6,14 @@ const { spawn } = require("child_process"); // Jay added this line
 const http = require("http"); // Required for WebSockets
 const socketIo = require("socket.io"); // WebSockets
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+
 const server = http.createServer(app); // Create HTTP server
 const io = socketIo(server, { cors: { origin: "*" } }); // WebSocket server
 
 
-const app = express();
-app.use(cors());
-app.use(express.json());
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
@@ -24,7 +25,7 @@ io.on("connection", (socket) => {
 
   socket.on("startProcess", () => {
     console.log("Processing started...");
-    const pythonProcess = spawn("python3", ["combinedModel.py"]);
+    const pythonProcess = spawn("python3", ["./Models/combinedModel.py"]);
 
     let output = "";
     pythonProcess.stdout.on("data", (data) => {
@@ -46,7 +47,8 @@ io.on("connection", (socket) => {
   });
 });
 
-app.listen(8080, () => console.log("Server running on port 8080"));
+server.listen(8080, () => console.log("Server running on port 8080"));
+
 
 
 
