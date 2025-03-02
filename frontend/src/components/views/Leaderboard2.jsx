@@ -1,6 +1,14 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { getFirestore, collection, query, orderBy, limit, getDocs } from "firebase/firestore";
+
+import {
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+} from "firebase/firestore";
 import escapeRoom2 from "../../assets/escapeRoom2.jpg"; // Fullscreen background
 import levels_image from "../../assets/levels_image.png"; // Paper background for leaderboard
 
@@ -59,8 +67,13 @@ const Leaderboard = () => {
         {timeTaken && email && (
           <div className="mb-4 text-center text-gray-900">
             <p className="text-xl font-semibold">Your Time: {timeTaken} sec</p>
-            <p className="text-xl font-semibold">Your Best Time: {bestTime} sec</p>
-            <p className="text-xl font-semibold">Your Username: {email.slice(0, 4)}</p>
+
+            <p className="text-xl font-semibold">
+              Your Best Time: {bestTime} sec
+            </p>
+            <p className="text-xl font-semibold">
+              Your Username: {email.slice(0, 4)}
+            </p>
           </div>
         )}
 

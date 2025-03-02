@@ -15,10 +15,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Title_screen />} />
         <Route path="/intro1" element={<Intro1 />} />
         <Route path="/intro2" element={<Intro2 />} />
-        <Route path="/title-screen" element={<Title_screen />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/levels" element={<AllLevels />} />
         <Route path="/escape-room-1" element={<EscapeRoom1 />} />
         <Route path="/escape-room-2" element={<EscapeRoom2 />} />

@@ -80,16 +80,21 @@ export default function EscapeRoom2() {
   const handleClearRoom = async () => {
     setCleared(true);
     stopTimer();
-  
+
+
     if (user) {
       const db = getFirestore();
       const userRef = doc(db, "times", "level2", "users", user.uid);
-  
+      const clearedLevelsRef = doc(db, "users", user.uid);
+
       try {
         // Get the current best time
         const userDoc = await getDoc(userRef);
-        const existingBestTime = userDoc.exists() ? userDoc.data().bestTime : null;
-      
+        const existingBestTime = userDoc.exists()
+          ? userDoc.data().bestTime
+          : null;
+
+
         let newBestTime;
         // If the new time is better OR if there's no existing best time, update Firestore
         if (existingBestTime == null || timeTaken < existingBestTime) {
@@ -97,14 +102,31 @@ export default function EscapeRoom2() {
         } else {
           newBestTime = existingBestTime; // Keep the old best time
         }
-      
+
+
+
         // Store the current time and best time in Firestore
         await setDoc(userRef, {
           username: user.email,
           time: timeTaken, // Store current time
           bestTime: newBestTime, // Update best time if necessary
         });
-      
+
+
+        const clearedLevelsDoc = await getDoc(clearedLevelsRef);
+        const clearedLevels = clearedLevelsDoc.exists()
+          ? clearedLevelsDoc.data().clearedLevels || []
+          : []; // If no data, start with an empty array
+
+        // Check if the level is already in the cleared levels
+        if (!clearedLevels.includes("level2")) {
+          clearedLevels.push("level2"); // Add the current level to the cleared levels
+          await setDoc(clearedLevelsRef, {
+            clearedLevels, // Update the cleared levels list
+          }, { merge: true }); // Merge so we don't overwrite other data
+        }
+
+
         // Navigate to leaderboard and pass the data (current time and best time)
         navigate("/leaderboard2", {
           state: {
@@ -113,11 +135,10 @@ export default function EscapeRoom2() {
             email: user.email,
           },
         });
-      
+
       } catch (error) {
         console.error("Error saving completion time:", error);
       }
-      
     }
   };
   

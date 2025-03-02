@@ -11,6 +11,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
   deleteObject,
+  listAll,
 } from "firebase/storage";
 
 const firebaseConfig = {
@@ -75,10 +76,35 @@ const uploadFile = (userId, file) => {
   });
 };
 
+const fetchUserFiles = async (userId) => {
+  const storageRef = ref(storage, `users/${userId}/files/`);
+
+  try {
+    const res = await listAll(storageRef);
+    const filesPromises = res.items.map(async (item) => {
+      const url = await getDownloadURL(item);
+      return { name: item.name, url };
+    });
+
+    return Promise.all(filesPromises); // Ensure it returns the array
+  } catch (error) {
+    console.error("Error fetching files: ", error);
+    return []; // Return empty array if there's an error
+  }
+};
+
 // Function to delete the file from Firebase Storage
 const deleteFile = (userId, fileName) => {
   const fileRef = ref(storage, `users/${userId}/files/${fileName}`);
   return deleteObject(fileRef);
 };
 
-export { auth, signInWithGoogle, logout, storage, uploadFile, deleteFile };
+export {
+  auth,
+  signInWithGoogle,
+  logout,
+  storage,
+  uploadFile,
+  deleteFile,
+  fetchUserFiles,
+};

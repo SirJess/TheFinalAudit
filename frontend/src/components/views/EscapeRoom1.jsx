@@ -1,115 +1,208 @@
-import escapeRoom1 from "../../assets/escapeRoom1.jpg";
+import level1Background from "../../assets/level1/level1Background.png";
+import computerQ from "../../assets/level1/computerQ.png";
+import paper1Hint from "../../assets/level1/paper1Hint.png";
+import paper2hint from "../../assets/level1/paper2hint.png";
+import paper3hint from "../../assets/level1/paper3hint.png";
+import posterhint from "../../assets/level1/posterhint.png";
 import sheet1 from "../../assets/sheet1.png";
 import sheet2 from "../../assets/sheet2.png";
 import sheet3 from "../../assets/sheet3.png";
 import learnBalanceSheet from "../../assets/learnBalanceSheet.png";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
-import BalanceSheetQuiz from "../missingBalanceSheet/BalanceSheetQuiz";
 import { useNavigate } from "react-router-dom";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import BalanceSheetQuiz from "../missingBalanceSheet/BalanceSheetQuiz";
+import TutorialOverlay from "../TutorialOverlay";
+import ShowItem from "../Dialogs/ShowItem";
+import informationIcon from "../../assets/informationIcon.png";
+import settingIcon from "../../assets/settingIcon.png";
+import Settings from "../Settings";
+import BackgroundMusic from "../BackgroundMusic";
+import bgMusic from "../../assets/audio/test.mp3";
 
-function useAuth() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function EscapeRoom1() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null); // Track the user
+  const [timeTaken, setTimeTaken] = useState(0);
+  const [timerInterval, setTimerInterval] = useState(null);
+  const [cleared, setCleared] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const balanceSheetQuizRef = useRef(null);
+  const [showTutorial, setShowTutorial] = useState(true);
 
+  const musicRef = useRef(null);
+  const [volume, setVolume] = useState(0.2);
+
+  // Firebase Auth listener
   useEffect(() => {
     const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // Set user when authenticated
+      } else {
+        setUser(null); // Clear user when not authenticated
+      }
     });
 
-    return () => unsubscribe(); // Clean up the listener on unmount
+    return () => unsubscribe(); // Clean up listener on unmount
   }, []);
-  console.log(user);
-  return { user, loading };
-}
 
-export default function EscapeRoom() {
-  const [selectedItem, setSelectedItem] = useState(null);
-  const { user, loading } = useAuth();
-  const navigate = useNavigate();
+  // Timer Functions
+  const startTimer = () => {
+    if (timerInterval) clearInterval(timerInterval);
+    const interval = setInterval(() => {
+      setTimeTaken((prevTime) => prevTime + 1);
+    }, 1000);
+    setTimerInterval(interval);
+  };
 
-  // const handleProcessPdf = async () => {
-  //   const bucket_name = "nth-segment-450320-i5.firebasestorage.app";
-  //   const object_path =
-  //     "users/" + user.uid + "/files/" + "UGA_annual_report.pdf";
-  //   try {
-  //     const response = await fetch("http://localhost:5000/process-pdf", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ bucket: bucket_name, object_path: object_path }),
-  //     });
-  //     const result = await response.text();
-  //     console.log("Processed PDF text file path:", result);
-  //   } catch (error) {
-  //     console.error("Error processing PDF:", error);
-  //   }
-  // };
+  const stopTimer = () => {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      setTimerInterval(null);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      startTimer();
+    }
+    return () => stopTimer();
+  }, [user]);
+
+  const handleClearRoom = async () => {
+    setCleared(true);
+    stopTimer();
+
+    if (user) {
+      const db = getFirestore();
+      const userRef = doc(db, "times", "level1", "users", user.uid);
+      const clearedLevelsRef = doc(db, "users", user.uid);
+
+      try {
+        // Get the current best time
+        const userDoc = await getDoc(userRef);
+        const existingBestTime = userDoc.exists()
+          ? userDoc.data().bestTime
+          : null;
+
+        let newBestTime;
+        // If the new time is better OR if there's no existing best time, update Firestore
+        if (existingBestTime == null || timeTaken < existingBestTime) {
+          newBestTime = timeTaken; // Set the new best time
+        } else {
+          newBestTime = existingBestTime; // Keep the old best time
+        }
+
+        // Store the current time and best time in Firestore
+        await setDoc(userRef, {
+          username: user.email,
+          time: timeTaken, // Store current time
+          bestTime: newBestTime, // Update best time if necessary
+        });
+
+        const clearedLevelsDoc = await getDoc(clearedLevelsRef);
+        const clearedLevels = clearedLevelsDoc.exists()
+          ? clearedLevelsDoc.data().clearedLevels || []
+          : []; // If no data, start with an empty array
+
+        // Check if the level is already in the cleared levels
+        if (!clearedLevels.includes("level1")) {
+          clearedLevels.push("level1"); // Add the current level to the cleared levels
+          await setDoc(
+            clearedLevelsRef,
+            {
+              clearedLevels, // Update the cleared levels list
+            },
+            { merge: true }
+          ); // Merge so we don't overwrite other data
+        }
+
+        // Navigate to leaderboard and pass the data (current time and best time)
+        navigate("/leaderboard1", {
+          state: {
+            timeTaken: timeTaken,
+            bestTime: newBestTime, // Use the correct best time here
+            email: user.email,
+          },
+        });
+      } catch (error) {
+        console.error("Error saving completion time:", error);
+      }
+    }
+  };
 
   const hotspots = [
     {
       id: "poster",
-      x: "748px",
-      y: "368px",
+      x: "44vw",
+      y: "40vh",
       width: "66px",
       height: "92px",
       image: learnBalanceSheet,
+      imageClickable: posterhint,
       borderRadius: "0px",
       boxShadow: "0px 0px 10px 4px rgba(255, 255, 0, 0.6)",
     },
     {
       id: "assets",
-      x: "825px",
-      y: "785px",
+      x: "68vw",
+      y: "89vh",
       width: "78px",
       height: "33px",
       image: sheet1,
-      borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+      imageClickable: paper1Hint,
+      borderRadius: "",
+      filter: "drop-shadow(0px 0px 15px rgba(255, 255, 0, 0.8))",
     },
     {
       id: "liability",
-      x: "298px",
-      y: "825px",
-      width: "60px",
+      x: "30vw",
+      y: "90vh",
+      width: "90px",
       height: "33px",
       image: sheet2,
-      borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+      imageClickable: paper3hint,
+      filter: "drop-shadow(0px 0px 20px rgba(255, 255, 0, 0.8))",
     },
     {
       id: "enter_balance_sheet",
-      x: "445px",
-      y: "500px",
-      width: "111px",
-      height: "80px",
+      x: "32.2vw",
+      y: "55.3vh",
+      width: "146px",
+      height: "109px",
       image: "",
+      imageClickable: computerQ,
       borderRadius: "0px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+      filter: "drop-shadow(0px 0px 15px rgba(255, 255, 0, 0.8))",
     },
     {
       id: "profit",
-      x: "1454px",
-      y: "610px",
+      x: "84vw",
+      y: "66vh",
       width: "70px",
       height: "19px",
       image: sheet3,
+      imageClickable: paper2hint,
       borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+      filter: "drop-shadow(0px 0px 15px rgba(255, 255, 0, 0.8))",
     },
   ];
 
   return (
     <div className="relative w-full h-screen bg-black">
+      <BackgroundMusic audioFile={bgMusic} volume={volume} ref={musicRef} />
+      {/* <Settings musicRef={musicRef} volume={volume} setVolume={setVolume} /> */}
+
+      {showTutorial && (
+        <TutorialOverlay onFinish={() => setShowTutorial(false)} />
+      )}
       {/* Background Image */}
       <img
-        src={escapeRoom1}
+        src={level1Background}
         alt="Escape Room"
         className="w-full h-full object-cover z-0"
       />
@@ -118,7 +211,7 @@ export default function EscapeRoom() {
       {hotspots.map((spot) => (
         <motion.div
           key={spot.id}
-          className="absolute bg-transparent cursor-pointer z-10" // Set z-index to ensure it's above the background
+          className="absolute cursor-pointer z-10" // Set z-index to ensure it's above the background
           style={{
             left: spot.x,
             top: spot.y,
@@ -126,6 +219,10 @@ export default function EscapeRoom() {
             height: spot.height,
             boxShadow: spot.boxShadow,
             borderRadius: spot.borderRadius,
+            backgroundImage: `url(${spot.imageClickable})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            filter: spot.filter ? spot.filter : "none",
           }}
           whileHover={{ scale: 1.1 }}
           onClick={() => setSelectedItem(spot)}
@@ -140,7 +237,7 @@ export default function EscapeRoom() {
           <Dialog.Content className="fixed inset-0 flex justify-center items-center p-4 z-30">
             <div className="bg-white p-4 rounded-lg">
               {selectedItem.id === "enter_balance_sheet" ? (
-                <BalanceSheetQuiz />
+                <BalanceSheetQuiz onQuizComplete={handleClearRoom} />
               ) : (
                 <img src={selectedItem.image} alt="Popup" className="w-full" />
               )}
@@ -155,6 +252,22 @@ export default function EscapeRoom() {
           </Dialog.Content>
         </Dialog.Root>
       )}
+      <div className="absolute top-4 left-4 z-50">
+        <ShowItem imageSrc={informationIcon} itemComponent={TutorialOverlay} />
+      </div>
+      <div className="absolute top-4 left-16 z-50">
+        <ShowItem
+          imageSrc={settingIcon}
+          itemComponent={(props) => (
+            <Settings
+              {...props}
+              musicRef={musicRef}
+              volume={volume}
+              setVolume={setVolume}
+            />
+          )}
+        />
+      </div>
     </div>
   );
 }
