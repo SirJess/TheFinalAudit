@@ -155,7 +155,7 @@ export default function EscapeRoom1() {
     {
       id: "liability",
       x: "30vw",
-      y: "825px",
+      y: "90vh",
       width: "90px",
       height: "33px",
       image: sheet2,
