@@ -30,7 +30,7 @@ const Settings = ({ musicRef, volume, setVolume, openSettings }) => {
               step="0.01"
               value={volume}
               onChange={handleVolumeChange}
-              className="w-full"
+              className="w-full cursor-pointer"
             />
           </div>
         </div>
@@ -40,7 +40,7 @@ const Settings = ({ musicRef, volume, setVolume, openSettings }) => {
       <div className="mt-4">
         <button
           onClick={handleNavigationLevels}
-          className="mb-2 px-4 py-2 bg-blue-500 text-white rounded"
+          className="mb-2 px-4 py-2 cursor-pointer bg-blue-500 text-white rounded"
         >
           All Levels
         </button>
