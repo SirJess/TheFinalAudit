@@ -3,7 +3,7 @@ import learnBalanceSheet from "../../assets/learnBalanceSheet.png";
 import levels_image from "../../assets/levels_image.png";
 import Horizontal_Analysis from "../../assets/Horizontal_Analysis.png";
 import what_is_ebitda from "../../assets/what_is_ebitda.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -14,6 +14,13 @@ import computerQ from "../../assets/level2/computerQ.png";
 import keyboardHint from "../../assets/level2/keyboardHint.png";
 import level2Background from "../../assets/level2/level2Background.png";
 import paperHint from "../../assets/level2/paperHint.png";
+import TutorialOverlay from "../TutorialOverlay";
+import ShowItem from "../Dialogs/ShowItem";
+import informationIcon from "../../assets/informationIcon.png";
+import settingIcon from "../../assets/settingIcon.png";
+import Settings from "../Settings";
+import BackgroundMusic from "../BackgroundMusic";
+import bgMusic from "../../assets/audio/test.mp3";
 
 function useAuth() {
   const [user, setUser] = useState(null);
@@ -41,7 +48,9 @@ export default function EscapeRoom2() {
   const [timeTaken, setTimeTaken] = useState(0);
   const [cleared, setCleared] = useState(false);
   const [timerInterval, setTimerInterval] = useState(null); // Fixed declaration
-
+  const musicRef = useRef(null);
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [volume, setVolume] = useState(0.2);
   // Hardcoded quiz values
   const netIncome = 16270;
   const interestExpense = 2519;
@@ -149,8 +158,8 @@ export default function EscapeRoom2() {
       id: "explain_EBITDA",
       x: "24vw",
       y: "28vh",
-      width: "170px",
-      height: "250px",
+      width: "160px",
+      height: "240px",
       image: what_is_ebitda,
       imageClickable: computerQ,
       borderRadius: "0px",
@@ -194,6 +203,12 @@ export default function EscapeRoom2() {
 
   return (
     <div className="relative w-full h-screen bg-black">
+      <BackgroundMusic audioFile={bgMusic} volume={volume} ref={musicRef} />
+      {/* <Settings musicRef={musicRef} volume={volume} setVolume={setVolume} /> */}
+
+      {showTutorial && (
+        <TutorialOverlay onFinish={() => setShowTutorial(false)} />
+      )}
       <img
         src={level2Background}
         alt="Escape Room"
@@ -269,6 +284,22 @@ export default function EscapeRoom2() {
           </Dialog.Content>
         </Dialog.Root>
       )}
+      <div className="absolute top-4 left-4 z-50">
+        <ShowItem imageSrc={informationIcon} itemComponent={TutorialOverlay} />
+      </div>
+      <div className="absolute top-4 left-16 z-50">
+        <ShowItem
+          imageSrc={settingIcon}
+          itemComponent={(props) => (
+            <Settings
+              {...props}
+              musicRef={musicRef}
+              volume={volume}
+              setVolume={setVolume}
+            />
+          )}
+        />
+      </div>
     </div>
   );
 }
