@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSocket } from "../../hooks/useSocket";
 import "../../assets/animations/animations.css";
 import "../../assets/animations/title_screen.css";
+import AnimatedText from "../../assets/animations/AnimatedText";
 
 const TitleScreen = () => {
   const navigate = useNavigate();
@@ -29,9 +30,10 @@ const TitleScreen = () => {
             The Final Audit
           </div>
         </div>
-        <h3 className="text-white text-md text-center font-bold animate-pulse-scale overflow-hidden">
-          The books are cooked, can you survive the audit?
-        </h3>
+        <AnimatedText
+          text="The books are cooked, can you survive the audit?"
+          className="text-white text-md text-center font-bold"
+        />
       </div>
       <button
         className="transition-all duration-500 
