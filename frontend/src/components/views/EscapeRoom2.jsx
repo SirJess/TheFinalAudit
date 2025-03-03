@@ -20,7 +20,7 @@ import informationIcon from "../../assets/informationIcon.png";
 import settingIcon from "../../assets/settingIcon.png";
 import Settings from "../Settings";
 import BackgroundMusic from "../BackgroundMusic";
-import bgMusic from "../../assets/audio/test.mp3";
+import bgMusic from "../../assets/audio/level2.mp3";
 
 function useAuth() {
   const [user, setUser] = useState(null);

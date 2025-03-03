@@ -1,16 +1,22 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import escapeRoom2 from "../../assets/escapeRoom2.jpg";
+import escapeRoom1 from "../../assets/escapeRoom1.jpg";
 
 export default function Intro() {
   const navigate = useNavigate(); // Initialize navigate
-  const handleNavigation = () => {
+
+  const handleLevels = () => {
     navigate("/levels"); // Replace with the correct route path
   };
+
+  const handleNext = () => {
+    navigate("/escape-room-2"); // Replace with the correct route path
+  };
+
   return (
     <div
       style={{
-        backgroundImage: `url(${escapeRoom2})`,
+        backgroundImage: `url(${escapeRoom1})`,
       }}
       className="flex flex-col items-center h-screen justify-center bg-cover bg-center bg-no-repeat bg-fixed bg-opacity-50"
     >
@@ -63,6 +69,24 @@ export default function Intro() {
           next challenge awaits, and it will demand more than just your wits.
           Will you uncover the full story? Only time will tell...
         </p>
+
+        <div className="mt-6 flex justify-center gap-4">
+            {/* Back to Levels Button */}
+            <button
+            className="py-3 px-6 w-40 bg-yellow-500 text-white rounded-lg hover:bg-yellow-400 transition-all shadow-md"
+            onClick={handleLevels}
+            >
+            All Levels
+            </button>
+
+            {/* Next Button */}
+            <button
+            className="py-3 px-6 w-40 bg-yellow-500 text-white rounded-lg hover:bg-yellow-400 transition-all shadow-md"
+            onClick={handleNext}
+            >
+            Next Level
+            </button>
+        </div>
       </motion.div>
     </div>
   );
