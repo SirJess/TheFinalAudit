@@ -3,12 +3,24 @@ import learnBalanceSheet from "../../assets/learnBalanceSheet.png";
 import levels_image from "../../assets/levels_image.png";
 import Horizontal_Analysis from "../../assets/Horizontal_Analysis.png";
 import what_is_ebitda from "../../assets/what_is_ebitda.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom"; // Fix missing import
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import boxHint from "../../assets/level2/boxHint.png";
+import computerQ from "../../assets/level2/computerQ.png";
+import keyboardHint from "../../assets/level2/keyboardHint.png";
+import level2Background from "../../assets/level2/level2Background.png";
+import paperHint from "../../assets/level2/paperHint.png";
+import TutorialOverlay from "../TutorialOverlay";
+import ShowItem from "../Dialogs/ShowItem";
+import informationIcon from "../../assets/informationIcon.png";
+import settingIcon from "../../assets/settingIcon.png";
+import Settings from "../Settings";
+import BackgroundMusic from "../BackgroundMusic";
+import bgMusic from "../../assets/audio/test.mp3";
 
 function useAuth() {
   const [user, setUser] = useState(null);
@@ -36,7 +48,9 @@ export default function EscapeRoom2() {
   const [timeTaken, setTimeTaken] = useState(0);
   const [cleared, setCleared] = useState(false);
   const [timerInterval, setTimerInterval] = useState(null); // Fixed declaration
-
+  const musicRef = useRef(null);
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [volume, setVolume] = useState(0.2);
   // Hardcoded quiz values
   const netIncome = 16270;
   const interestExpense = 2519;
@@ -81,6 +95,7 @@ export default function EscapeRoom2() {
     setCleared(true);
     stopTimer();
 
+
     if (user) {
       const db = getFirestore();
       const userRef = doc(db, "times", "level2", "users", user.uid);
@@ -93,6 +108,7 @@ export default function EscapeRoom2() {
           ? userDoc.data().bestTime
           : null;
 
+
         let newBestTime;
         // If the new time is better OR if there's no existing best time, update Firestore
         if (existingBestTime == null || timeTaken < existingBestTime) {
@@ -101,12 +117,15 @@ export default function EscapeRoom2() {
           newBestTime = existingBestTime; // Keep the old best time
         }
 
+
+
         // Store the current time and best time in Firestore
         await setDoc(userRef, {
           username: user.email,
           time: timeTaken, // Store current time
           bestTime: newBestTime, // Update best time if necessary
         });
+
 
         const clearedLevelsDoc = await getDoc(clearedLevelsRef);
         const clearedLevels = clearedLevelsDoc.exists()
@@ -116,10 +135,15 @@ export default function EscapeRoom2() {
         // Check if the level is already in the cleared levels
         if (!clearedLevels.includes("level2")) {
           clearedLevels.push("level2"); // Add the current level to the cleared levels
-          await setDoc(clearedLevelsRef, {
-            clearedLevels, // Update the cleared levels list
-          }, { merge: true }); // Merge so we don't overwrite other data
+          await setDoc(
+            clearedLevelsRef,
+            {
+              clearedLevels, // Update the cleared levels list
+            },
+            { merge: true }
+          ); // Merge so we don't overwrite other data
         }
+
 
         // Navigate to leaderboard and pass the data (current time and best time)
         navigate("/leaderboard2", {
@@ -129,63 +153,72 @@ export default function EscapeRoom2() {
             email: user.email,
           },
         });
+
       } catch (error) {
         console.error("Error saving completion time:", error);
       }
     }
   };
+  
 
   const hotspots = [
     {
       id: "explain_EBITDA",
-      x: "370px",
-      y: "180px",
-      width: "90px",
-      height: "140px",
+      x: "24vw",
+      y: "28vh",
+      width: "160px",
+      height: "240px",
       image: what_is_ebitda,
+      imageClickable: computerQ,
       borderRadius: "0px",
-      boxShadow: "0px 0px 10px 4px rgba(255, 255, 0, 0.6)",
-      imagewidth: "w-[450px]",
+      filter: "drop-shadow(0px 0px 20px rgba(255, 255, 0, 0.8))",
     },
     {
       id: "enter_EBITDA",
-      x: "570px",
-      y: "250px",
-      width: "200px",
-      height: "150px",
+      x: "48vw",
+      y: "28vh",
+      width: "90px",
+      height: "90px",
       image: levels_image,
+      imageClickable: boxHint,
       borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 0, 0, 0.6)",
-      imagewidth: "100px",
+      filter: "drop-shadow(0px 0px 20px rgba(255, 255, 0, 0.8))",
     },
     {
       id: "depreciation_amortization",
-      x: "940px",
-      y: "270px",
-      width: "180px",
-      height: "160px",
+      x: "68vw",
+      y: "58vh",
+      width: "60px",
+      height: "60px",
       image: levels_image,
       borderRadius: "12px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
+      imageClickable: paperHint,
+      filter: "drop-shadow(0px 0px 20px rgba(255, 255, 0, 0.8))",
       imagewidth: "100px",
     },
     {
       id: "lost_your_data",
-      x: "1145px",
-      y: "545px",
-      width: "75px",
-      height: "40px",
+      x: "30vw",
+      y: "53vh",
+      width: "150px",
+      height: "60px",
       image: Horizontal_Analysis,
+      imageClickable: keyboardHint,
       borderRadius: "0px",
-      boxShadow: "0px 0px 15px 4px rgba(255, 255, 0, 0.6)",
-      imagewidth: "100px",
+      filter: "drop-shadow(0px 0px 20px rgba(255, 255, 0, 0.8))",
     },
   ];
 
   return (
     <div className="relative w-full h-screen bg-black">
+      <BackgroundMusic audioFile={bgMusic} volume={volume} ref={musicRef} />
+      {/* <Settings musicRef={musicRef} volume={volume} setVolume={setVolume} /> */}
+
+      {showTutorial && (
+        <TutorialOverlay onFinish={() => setShowTutorial(false)} />
+      )}
       <img
-        src={escapeRoom2}
+        src={level2Background}
         alt="Escape Room"
         className="w-full h-full object-cover"
       />
@@ -201,6 +234,10 @@ export default function EscapeRoom2() {
             height: spot.height,
             boxShadow: spot.boxShadow,
             borderRadius: spot.borderRadius,
+            backgroundImage: `url(${spot.imageClickable})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            filter: spot.filter ? spot.filter : "none",
           }}
           whileHover={{ scale: 1.1 }}
           onClick={() => {
@@ -255,6 +292,22 @@ export default function EscapeRoom2() {
           </Dialog.Content>
         </Dialog.Root>
       )}
+      <div className="absolute top-4 left-4 z-50">
+        <ShowItem imageSrc={informationIcon} itemComponent={TutorialOverlay} />
+      </div>
+      <div className="absolute top-4 left-16 z-50">
+        <ShowItem
+          imageSrc={settingIcon}
+          itemComponent={(props) => (
+            <Settings
+              {...props}
+              musicRef={musicRef}
+              volume={volume}
+              setVolume={setVolume}
+            />
+          )}
+        />
+      </div>
     </div>
   );
 }

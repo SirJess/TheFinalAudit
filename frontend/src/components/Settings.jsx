@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 
-const Settings = ({ musicRef, volume, setVolume, onFinish, handleClick }) => {
+const Settings = ({ musicRef, volume, setVolume, openSettings }) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(true);
+  const navigate = useNavigate();
+  const auth = getAuth();
 
   // Handle volume change
   const handleVolumeChange = (e) => {
@@ -9,8 +13,21 @@ const Settings = ({ musicRef, volume, setVolume, onFinish, handleClick }) => {
     setVolume(newVolume);
   };
 
+  const handleNavigationLevels = () => {
+    navigate("/levels");
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Log out the user
+      navigate("/"); // Navigate to the login page (or any other page)
+    } catch (error) {
+      console.error("Error logging out: ", error);
+    }
+  };
+
   return (
-    <div className="fixed top-10 left-0 m-4 z-50">
+    <div className="fixed top-12 left-4" style={{ zIndex: 1000 }}>
       {/* Settings Menu */}
       {isSettingsOpen && (
         <div className="mt-2 p-3 bg-gray-800 text-white rounded-md w-60">
@@ -24,11 +41,31 @@ const Settings = ({ musicRef, volume, setVolume, onFinish, handleClick }) => {
               step="0.01"
               value={volume}
               onChange={handleVolumeChange}
-              className="w-full"
+              className="w-full cursor-pointer"
             />
           </div>
         </div>
       )}
+
+      {/* All Levels Button */}
+      <div className="mt-4">
+        <button
+          onClick={handleNavigationLevels}
+          className="mb-2 px-4 py-2 cursor-pointer bg-blue-500 text-white rounded"
+        >
+          All Levels
+        </button>
+      </div>
+
+      {/* Logout Button */}
+      <div className="mt-4">
+        <button
+          onClick={handleLogout}
+          className="mb-2 px-4 py-2 cursor-pointer bg-blue-500 text-white rounded"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

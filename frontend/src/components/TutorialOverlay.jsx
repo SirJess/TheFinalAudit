@@ -15,7 +15,7 @@ const TutorialOverlay = ({ onFinish }) => {
       <div className="bg-gray-800 text-white p-6 rounded-md shadow-lg max-w-md text-center">
         <p>{steps[step]}</p>
         <button
-          className="mt-4 px-4 py-2 bg-yellow-400 text-black rounded-md hover:bg-yellow-500"
+          className="mt-4 px-4 py-2 bg-yellow-400 text-black cursor-pointer rounded-md hover:bg-yellow-500"
           onClick={() => {
             if (step < steps.length - 1) {
               setStep(step + 1);
