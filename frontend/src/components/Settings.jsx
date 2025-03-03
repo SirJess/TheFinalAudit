@@ -44,28 +44,29 @@ const Settings = ({ musicRef, volume, setVolume, openSettings }) => {
               className="w-full cursor-pointer"
             />
           </div>
+
+          {/* All Levels Button */}
+          <div className="mt-4">
+            <button
+              onClick={handleNavigationLevels}
+              className="mb-2 px-4 py-2 cursor-pointer bg-blue-500 text-white rounded"
+            >
+              All Levels
+            </button>
+          </div>
+
+          {/* Logout Button */}
+          <div className="mt-4">
+            <button
+              onClick={handleLogout}
+              className="mb-2 px-4 py-2 cursor-pointer bg-blue-500 text-white rounded"
+            >
+              Logout
+            </button>
+          </div>
+          
         </div>
       )}
-
-      {/* All Levels Button */}
-      <div className="mt-4">
-        <button
-          onClick={handleNavigationLevels}
-          className="mb-2 px-4 py-2 cursor-pointer bg-blue-500 text-white rounded"
-        >
-          All Levels
-        </button>
-      </div>
-
-      {/* Logout Button */}
-      <div className="mt-4">
-        <button
-          onClick={handleLogout}
-          className="mb-2 px-4 py-2 cursor-pointer bg-blue-500 text-white rounded"
-        >
-          Logout
-        </button>
-      </div>
     </div>
   );
 };

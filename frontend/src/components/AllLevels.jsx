@@ -53,7 +53,7 @@ const AllLevels = () => {
           const userDoc = await getDoc(userRef);
           if (userDoc.exists()) {
             const data = userDoc.data();
-            setClearedLevels(data.clearedLevels || ["level0"]); // Set cleared levels in state
+            setClearedLevels(data.clearedLevels || []); // Set cleared levels in state
           }
         } catch (error) {
           console.error("Error fetching cleared levels:", error);

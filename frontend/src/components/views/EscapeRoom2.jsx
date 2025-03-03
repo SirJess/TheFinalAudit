@@ -22,6 +22,7 @@ import Settings from "../Settings";
 import BackgroundMusic from "../BackgroundMusic";
 import level2 from "../../assets/audio/level2.mp3";
 
+
 function useAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
