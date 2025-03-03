@@ -4,6 +4,7 @@ import { useSocket } from "../../hooks/useSocket";
 import "../../assets/animations/animations.css";
 import "../../assets/animations/title_screen.css";
 import AnimatedText from "../../assets/animations/AnimatedText";
+import Particles from "../../assets/animations/Particles";
 
 const TitleScreen = () => {
   const navigate = useNavigate();
@@ -20,6 +21,12 @@ const TitleScreen = () => {
         backgroundImage: `url(${title_screen})`,
       }}
     >
+      <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        color="#ffffff"
+      />{" "}
+      {/* Add the Particles component */}
       <div className="mb-40">
         <div className="glitch-wrapper">
           <div
