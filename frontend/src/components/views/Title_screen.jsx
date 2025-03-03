@@ -1,6 +1,7 @@
 import title_screen from "../../assets/title_screen.jpg";
 import { useNavigate } from "react-router-dom";
 import "../../assets/animations/animations.css";
+import "../../assets/animations/title_screen.css";
 
 const TitleScreen = () => {
   const navigate = useNavigate();
@@ -8,20 +9,26 @@ const TitleScreen = () => {
   const handleStartGame = () => {
     navigate("/login");
   };
+
   return (
     <div
-      className="relative w-full h-screen bg-cover bg-center"
+      className="relative w-full h-screen bg-cover bg-center flex justify-center items-start"
       style={{
         backgroundImage: `url(${title_screen})`,
       }}
     >
-      <h1 className="text-red-300 pt-[60px] text-9xl text-center font-bold font-[Creepster]">
-        The Final Audit
-      </h1>
-      <h3 className="text-white absolute right-[220px] top-[150px] text-xl font-bold -rotate-12 animate-pulse-scale">
+      <div className="glitch-wrapper">
+        <div
+          style={{ fontFamily: "'Sixtyfour Convergence', serif" }}
+          className="glitch"
+          data-glitch="The Final Audit"
+        >
+          The Final Audit
+        </div>
+      </div>
+      <h3 className="text-white absolute right-[220px] top-[190px] text-md font-bold -rotate-12 animate-pulse-scale">
         The books are cooked, can you survive the audit?
       </h3>
-      {/* Add your buttons here */}
       <button
         className="absolute 
     transition-all duration-500 

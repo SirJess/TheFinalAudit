@@ -6,7 +6,7 @@ import levels_image from "../assets/levels_image.png";
 import cleared_level_image from "../assets/success.png"; // The image to show when level is completed
 import { FaLock } from "react-icons/fa"; // Import the lock icon
 import { getAuth } from "firebase/auth";
-import { getFirestore, doc, getDoc} from "firebase/firestore";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 const AllLevels = () => {
   const [clearedLevels, setClearedLevels] = useState([]); // State to store cleared levels
@@ -60,7 +60,7 @@ const AllLevels = () => {
         }
       }
     };
-    fetchClearedLevels()
+    fetchClearedLevels();
   }, [user]);
 
   return (
@@ -73,7 +73,7 @@ const AllLevels = () => {
       <div className="flex flex-col items-center justify-center h-full">
         <div
           style={glassStyle}
-          className="bg-opacity-70 p-12 rounded-lg shadow-lg"
+          className="bg-opacity-70 p-12 w-4/5 rounded-lg shadow-lg"
         >
           <h1 className="text-6xl font-bold text-white mb-8 text-center font-mono pb-6">
             All Levels
@@ -84,8 +84,8 @@ const AllLevels = () => {
               <Link
                 key={level.level}
                 to={level.path}
-                className={`h-[125px] w-[125px] flex items-center justify-center border-2 border-[#81663C] font-[Tangerine] text-white text-4xl shadow-lg relative ${
-                  (!clearedLevels.includes(`level${level.level - 1}`))
+                className={`lg:h-[115px] lg:w-[115px] md:w-[100px] md:h-[100px] flex items-center justify-center border-2 border-[#81663C] font-[Tangerine] text-white text-4xl shadow-lg relative ${
+                  !clearedLevels.includes(`level${level.level - 1}`)
                     ? "bg-gray-500 opacity-50 pointer-events-none"
                     : "bg-[#BC9456] hover:opacity-80"
                 }`}
@@ -101,7 +101,7 @@ const AllLevels = () => {
 
                 {/* If the level is locked, show the lock icon */}
                 {!clearedLevels.includes(`level${level.level - 1}`) && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-20 bg-gray-500 opacity-50 pointer-events-none bg-gray-500 opacity-50 pointer-events-none">
+                  <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 z-20 opacity-50 bg-black pointer-events-none">
                     <FaLock className="text-3xl text-white" />
                   </div>
                 )}
